@@ -188,10 +188,8 @@ export class PhoneChecker {
       }
 
       const iframeData = responseData.iframeResponses;
-      console.log("iframeData", iframeData);
       if (iframeData && iframeData.length > 0) {
         const iframeResponse = iframeData[0].phoneValidationResult;
-        console.log("iframeResponse", iframeResponse);
         return iframeResponse;
       }
 
@@ -777,26 +775,66 @@ export class PhoneChecker {
 
       console.log(`📄 CAPTCHA image saved to: ${captchaImagePath}`);
 
-      // For Vercel serverless environment, use a simplified approach
-      if (process.env.VERCEL) {
-        console.log('🌐 Running in Vercel serverless environment - skipping OCR due to WASM compatibility issues');
-        
-        // Clean up temp file
+      // For Vercel serverless environment, use external OCR API
+      const isVercel = !!process.env.VERCEL;
+      if (isVercel) {
+        console.log("🌐 Running in Vercel serverless environment - using external OCR API");
+
         try {
-          await fs.unlink(captchaImagePath);
-        } catch (e) {
-          console.warn('Could not delete temp file:', e);
+          // Use external OCR API to avoid WASM issues
+          const ocrApiUrl = process.env.OCR_API_URL || "http://localhost:3001";
+          const ocrResponse = await axios.post(
+            `${ocrApiUrl}/ocr`,
+            {
+              imageUrl: captchaUrl,
+              cookies: cookieString,
+              options: {
+                whitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+                serverless: true,
+              },
+            },
+            {
+              timeout: 30000, // 30 second timeout for OCR processing
+              headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "PhoneChecker/1.0",
+              },
+            }
+          );
+
+          // Clean up temp file
+          try {
+            await fs.unlink(captchaImagePath);
+          } catch (e) {
+            console.warn("Could not delete temp file:", e);
+          }
+
+          if (ocrResponse.data.success && ocrResponse.data.result.text) {
+            const cleanText = ocrResponse.data.result.text;
+            console.log(`🔍 CAPTCHA solved via external OCR API: "${cleanText}" (confidence: ${ocrResponse.data.result.confidence})`);
+            return cleanText;
+          } else {
+            throw new Error(`External OCR API failed: ${ocrResponse.data.error || "Unknown error"}`);
+          }
+        } catch (externalOcrError) {
+          console.error("❌ External OCR API failed:", externalOcrError);
+          console.log("🔄 Using smart CAPTCHA fallback for serverless environment");
+
+          // Clean up temp file if it exists
+          try {
+            await fs.unlink(captchaImagePath);
+          } catch (e) {
+            // Ignore cleanup errors
+          }
+
+          // Return a smart fallback value
+          return this.generateSmartCaptchaFallback();
         }
-        
-        // In serverless environment, we can't reliably use Tesseract.js due to WASM file system dependencies
-        // Return a smart fallback based on common CAPTCHA patterns
-        console.log('🔄 Using smart CAPTCHA fallback for serverless environment');
-        return this.generateSmartCaptchaFallback();
       }
 
       // Local development - use full featured OCR
-      console.log('🏠 Running in local environment - using advanced OCR');
-      
+      console.log("🏠 Running in local environment - using advanced OCR");
+
       // Initialize Tesseract worker with better language support
       const worker = await createWorker(["eng"]);
 
@@ -954,16 +992,16 @@ export class PhoneChecker {
   private generateCaptchaFallback(): string {
     // Generate a 5-character alphanumeric string as a fallback
     // This won't work most of the time, but provides a reasonable attempt
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+
     // Use timestamp-based pseudo-randomness for consistency
     const timestamp = Date.now();
     for (let i = 0; i < 5; i++) {
       const index = (timestamp + i * 17) % chars.length;
       result += chars[index];
     }
-    
+
     console.log(`🔄 Generated CAPTCHA fallback: "${result}"`);
     return result;
   }
@@ -976,22 +1014,22 @@ export class PhoneChecker {
     // Common CAPTCHA patterns and lengths
     const strategies = [
       // 5-character mixed alphanumeric (most common)
-      () => this.generateRandomString(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),
+      () => this.generateRandomString(5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"),
       // 4-character mixed
-      () => this.generateRandomString(4, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),
-      // 6-character mixed  
-      () => this.generateRandomString(6, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),
+      () => this.generateRandomString(4, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"),
+      // 6-character mixed
+      () => this.generateRandomString(6, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"),
       // Numbers only (sometimes CAPTCHAs are numeric)
-      () => this.generateRandomString(5, '0123456789'),
+      () => this.generateRandomString(5, "0123456789"),
       // Letters only (sometimes CAPTCHAs are alphabetic)
-      () => this.generateRandomString(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+      () => this.generateRandomString(5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
     ];
 
     // Use timestamp to select strategy (but make it deterministic for retry consistency)
     const timestamp = Date.now();
     const strategyIndex = Math.floor(timestamp / 10000) % strategies.length;
     const result = strategies[strategyIndex]();
-    
+
     console.log(`🎯 Generated smart CAPTCHA fallback (strategy ${strategyIndex + 1}): "${result}"`);
     return result;
   }
@@ -1003,15 +1041,15 @@ export class PhoneChecker {
    * @returns Random string
    */
   private generateRandomString(length: number, chars: string): string {
-    let result = '';
+    let result = "";
     const timestamp = Date.now();
-    
+
     for (let i = 0; i < length; i++) {
       // Use timestamp + position for pseudo-randomness (deterministic for retry consistency)
       const index = (timestamp + i * 23 + length * 7) % chars.length;
       result += chars[index];
     }
-    
+
     return result;
   }
 
@@ -1075,7 +1113,7 @@ export class PhoneChecker {
           await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second before retry
         }
       }
-      
+
       console.log(`🔤 Final CAPTCHA solution: ${captchaSolution}`);
 
       // Prepare form data with solved CAPTCHA
