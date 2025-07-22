@@ -771,8 +771,8 @@ export class PhoneChecker {
       });
 
       // For Vercel serverless environment, use external OCR API
-      const isVercel = !!process.env.VERCEL || !!process.env.OCR_API_URL;
-      if (isVercel) {
+      const hasApiOcr = !!process.env.OCR_API_URL;
+      if (hasApiOcr) {
         console.log("🌐 Running in Vercel serverless environment - using external OCR API");
         const captchaBase64 = `data:image/png;base64,${imageResponse.data.toString("base64")}`;
         try {
