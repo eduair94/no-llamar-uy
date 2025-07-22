@@ -88,6 +88,95 @@
         border-top: 1px solid #eee;
         color: #666;
       }
+      
+      /* Responsive pre elements */
+      pre {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+        
+        .container {
+          padding: 20px;
+        }
+        
+        h1 {
+          font-size: 24px;
+        }
+        
+        .endpoint {
+          padding: 12px;
+          margin: 8px 0;
+        }
+        
+        .code {
+          padding: 8px;
+          font-size: 12px;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+        
+        .test-button {
+          padding: 8px 15px;
+          font-size: 14px;
+          display: block;
+          width: 100%;
+          margin: 8px 0;
+        }
+        
+        .github-link {
+          padding: 8px 15px;
+          font-size: 14px;
+          display: block;
+          text-align: center;
+        }
+        
+        pre {
+          font-size: 12px;
+          padding: 10px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .container {
+          padding: 15px;
+        }
+        
+        h1 {
+          font-size: 20px;
+        }
+        
+        .endpoint h3 {
+          font-size: 16px;
+        }
+        
+        .code {
+          font-size: 11px;
+          padding: 6px;
+        }
+        
+        .test-button {
+          padding: 6px 12px;
+          font-size: 13px;
+        }
+        
+        pre {
+          font-size: 11px;
+          padding: 8px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -119,7 +208,7 @@
       </div>
 
       <div class="footer">
-        <p>Desarrollado por <a href="https://github.com/eduair94" target="_blank">@eduair94</a></p>
+        <p>Desarrollado por <a href="https://www.linkedin.com/in/eduardo-airaudo/" target="_blank">Eduardo Airaudo</a> (<a href="https://github.com/eduair94" target="_blank">@eduair94</a>)</p>
         <p>Código fuente disponible en <a href="https://github.com/eduair94/no-llamar-uy" target="_blank">GitHub</a></p>
       </div>
     </div>

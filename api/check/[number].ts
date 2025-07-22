@@ -6,6 +6,9 @@ const phoneValidator = new PhoneValidator();
 const phoneChecker = new PhoneChecker();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Track start time for performance measurement
+  const startTime = Date.now();
+
   // Add CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -20,16 +23,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     if (method !== "GET") {
+      const timeMs = Date.now() - startTime;
       return res.status(405).json({
         success: false,
         error: "Method not allowed",
+        timeMs,
       });
     }
 
     if (!number || typeof number !== "string") {
+      const timeMs = Date.now() - startTime;
       return res.status(400).json({
         success: false,
         error: "Phone number parameter is required",
+        timeMs,
       });
     }
 
@@ -40,9 +47,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!validationResult.isValid) {
       console.log(`❌ Phone number validation failed: ${validationResult.error}`);
+      const timeMs = Date.now() - startTime;
       return res.status(400).json({
         success: false,
         error: validationResult.error,
+        timeMs,
       });
     }
 
@@ -51,9 +60,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!normalizedNumber) {
       console.log(`❌ Phone number normalization failed`);
+      const timeMs = Date.now() - startTime;
       return res.status(400).json({
         success: false,
         error: "Could not normalize phone number to URSEC format",
+        timeMs,
       });
     }
 
@@ -65,6 +76,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log(`📋 Check completed with result: ${checkResult.result}`);
 
+    // Calculate total execution time
+    const timeMs = Date.now() - startTime;
+
     return res.json({
       success: true,
       phoneNumber: {
@@ -75,10 +89,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         type: validationResult.type,
       },
       ursecCheck: checkResult,
+      timeMs,
     });
   } catch (error) {
     console.error("❌ API Error:", error);
 
+    const timeMs = Date.now() - startTime;
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
 
     return res.status(500).json({
@@ -86,6 +102,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: "Internal server error",
       details: errorMessage,
       timestamp: new Date().toISOString(),
+      timeMs,
     });
   }
 }
