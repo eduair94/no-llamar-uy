@@ -1,6 +1,6 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import { PhoneChecker } from '../../src/PhoneChecker';
-import { PhoneValidator } from '../../src/PhoneValidator';
+import { VercelRequest, VercelResponse } from "@vercel/node";
+import { PhoneChecker } from "../../src/PhoneChecker";
+import { PhoneValidator } from "../../src/PhoneValidator";
 
 // Initialize services
 const phoneValidator = new PhoneValidator();
@@ -8,32 +8,32 @@ const phoneChecker = new PhoneChecker();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Add CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
   const { method } = req;
   const { number } = req.query;
-  
+
   try {
-    if (method !== 'GET') {
+    if (method !== "GET") {
       return res.status(405).json({
         success: false,
         error: "Method not allowed",
       });
     }
 
-    if (!number || typeof number !== 'string') {
+    if (!number || typeof number !== "string") {
       return res.status(400).json({
         success: false,
         error: "Phone number parameter is required",
       });
     }
-    
+
     console.log(`\n🔍 Processing phone number: ${number}`);
 
     // Step 1: Validate the phone number format
@@ -49,7 +49,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Step 2: Normalize to URSEC format
     const normalizedNumber = phoneValidator.normalizeUruguayanPhone(number);
-    
+
     if (!normalizedNumber) {
       console.log(`❌ Phone number normalization failed`);
       return res.status(400).json({
@@ -75,18 +75,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         formatted: validationResult.formatted,
         type: validationResult.type,
       },
-      ursecCheck: {
-        result: checkResult.result,
-        details: checkResult.details,
-        timestamp: new Date().toISOString(),
-      },
+      ursecCheck: checkResult,
     });
-
   } catch (error) {
     console.error("❌ API Error:", error);
-    
+
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    
+
     return res.status(500).json({
       success: false,
       error: "Internal server error",
