@@ -1,7 +1,10 @@
 {
   "version": 2,
   "functions": {
-    "src/index.ts": {
+    "api/index.ts": {
+      "maxDuration": 30
+    },
+    "api/check/[number].ts": {
       "maxDuration": 60
     }
   },

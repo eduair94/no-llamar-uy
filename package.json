@@ -8,12 +8,16 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:simple": "ts-node src/index.ts",
+    "dev:test": "ts-node test-server.ts",
     "vercel-build": "tsc",
     "test": "ts-node test-comprehensive.ts",
     "test:phone": "ts-node test-phone-checker.ts",
     "test:json": "ts-node test-json-simple.ts",
     "test:enhanced": "ts-node test-enhanced-features.ts",
-    "test:api": "bash test_api.sh"
+    "test:api": "bash test_api.sh",
+    "test:api:complete": "bash test-api-complete.sh",
+    "test:api:node": "ts-node test-api.ts",
+    "test:vercel": "echo 'Run: npm run test:api:node https://your-project.vercel.app'"
   },
   "keywords": [
     "express",
@@ -36,8 +40,10 @@
     "@types/google-libphonenumber": "^7.4.30",
     "@types/node": "^20.10.0",
     "@types/tesseract.js": "^0.0.2",
+    "@vercel/node": "^5.3.6",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "vercel": "^44.5.0"
   }
 }

@@ -1,118 +1,157 @@
-# 🚀 Despliegue en Vercel
+# 🚀 Despliegue en Vercel - No Llamar API
 
-Esta guía te ayudará a desplegar la API No Llamar en Vercel.
+Esta guía te ayudará a desplegar la API de verificación de números de Uruguay en Vercel.
 
-## ⚠️ Consideraciones Importantes
+## 📋 Requisitos Previos
 
-Antes de desplegar en Vercel, ten en cuenta las siguientes limitaciones:
+- Cuenta en [Vercel](https://vercel.com)
+- Repositorio en GitHub/GitLab/Bitbucket
+- Node.js 18+ (configurado automáticamente por Vercel)
 
-### 🕐 Tiempo de Ejecución
-- **Hobby Plan**: 10 segundos máximo por función
-- **Pro Plan**: 60 segundos máximo por función
-- La resolución de CAPTCHA puede tomar 10-30 segundos
+## 🔧 Configuración del Proyecto
 
-### 🤖 OCR/CAPTCHA
-- Tesseract.js puede ser lento en entornos serverless
-- Recomendado usar el plan Pro de Vercel para mayor tiempo límite
-- Los CAPTCHAs complejos pueden causar timeouts
+### 📁 Estructura para Vercel
 
-## 📋 Pasos para Desplegar
+El proyecto ya está configurado con la estructura correcta para Vercel:
 
-### 1. Preparar el Repositorio
+```
+api/
+├── index.ts           # Endpoint de health check
+└── check/
+    └── [number].ts    # Endpoint para verificar números
+src/
+├── PhoneChecker.ts    # Lógica de verificación
+└── PhoneValidator.ts  # Validación de números
+```
 
+### ⚙️ Configuración (vercel.json)
+
+```json
+{
+  "version": 2,
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30
+    },
+    "api/check/[number].ts": {
+      "maxDuration": 60
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+## 🚀 Pasos para Desplegar
+
+### 1. Preparar el repositorio
 ```bash
-# Asegúrate de que todos los archivos estén commiteados
 git add .
-git commit -m "Prepare for Vercel deployment"
+git commit -m "Add Vercel serverless configuration"
 git push origin main
 ```
 
 ### 2. Conectar con Vercel
 
-1. Ve a [vercel.com](https://vercel.com)
-2. Inicia sesión con tu cuenta de GitHub
-3. Haz clic en "New Project"
-4. Importa tu repositorio `no-llamar-uy`
+1. Ve a [vercel.com](https://vercel.com) e inicia sesión
+2. Haz clic en "New Project"
+3. Importa tu repositorio desde GitHub/GitLab/Bitbucket
+4. Vercel detectará automáticamente que es un proyecto Node.js
 
-### 3. Configuración del Proyecto
+### 3. Configurar el proyecto
 
-Vercel detectará automáticamente que es un proyecto Node.js. Las configuraciones están en `vercel.json`:
+- **Framework Preset**: Other
+- **Build Command**: `npm run build`
+- **Output Directory**: (déjalo vacío)
+- **Install Command**: `npm install`
 
-```json
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "src/index.ts"
-    }
-  ],
-  "functions": {
-    "src/index.ts": {
-      "maxDuration": 60
-    }
-  }
-}
-```
+### 4. Variables de entorno (opcional)
 
-### 4. Variables de Entorno (Opcional)
-
-En el dashboard de Vercel, puedes agregar variables de entorno:
-
-- `NODE_ENV`: `production`
-- Otras variables según necesites
+Si necesitas variables de entorno adicionales:
+- Ve a Settings → Environment Variables
+- Agrega las variables necesarias
 
 ### 5. Desplegar
 
-Vercel desplegará automáticamente cuando hagas push a la rama principal:
+Haz clic en "Deploy" y espera a que se complete el despliegue.
+
+## 📋 Uso de la API en Vercel
+
+Una vez desplegada, tu API estará disponible en `https://tu-proyecto.vercel.app`
+
+### Endpoints disponibles:
+
+- **Health Check**: `GET /api`
+- **Verificar número**: `GET /api/check/{numero}`
+
+### Ejemplos de uso:
 
 ```bash
-git push origin main
+# Health check
+curl https://tu-proyecto.vercel.app/api
+
+# Verificar número de teléfono
+curl https://tu-proyecto.vercel.app/api/check/98297150
+curl https://tu-proyecto.vercel.app/api/check/59898297150
 ```
 
-## 🌐 URLs de Ejemplo
+## ⚡ Consideraciones de Rendimiento
 
-Una vez desplegado, tu API estará disponible en una URL como:
+### Timeouts
+- **Health check**: 30 segundos (más que suficiente)
+- **Verificación de números**: 60 segundos (para procesar CAPTCHAs)
+
+### Planes de Vercel
+- **Hobby (Gratis)**: 10 segundos máximo - ⚠️ Puede causar timeouts
+- **Pro ($20/mes)**: 60 segundos máximo - ✅ Recomendado
+
+### Cold Starts
+Las funciones serverless pueden tener "cold starts" (arranque en frío):
+- Primera petición puede tardar 2-3 segundos extra
+- Peticiones posteriores son más rápidas
+
+## 🔍 Monitoreo y Debugging
+
+### Ver logs en tiempo real:
+```bash
+vercel logs tu-proyecto.vercel.app
 ```
-https://tu-proyecto.vercel.app/check/95614500
-https://tu-proyecto.vercel.app/health
-```
 
-## 🐛 Troubleshooting
+### Acceder al dashboard:
+1. Ve a tu proyecto en vercel.com
+2. Pestaña "Functions" para ver el rendimiento
+3. Pestaña "Analytics" para métricas de uso
 
-### Timeout Errors
-- Considera upgradar a Vercel Pro para mayor tiempo límite
-- Optimiza el código de OCR para mejor performance
+## 🚨 Solución de Problemas
 
-### CAPTCHA Issues
-- Los CAPTCHAs muy complejos pueden fallar
-- El sistema automáticamente reintenta hasta 3 veces
+### Error: "Function timeout"
+- Cambia al plan Pro de Vercel
+- El plan gratuito tiene límite de 10 segundos
 
-### Memory Issues
-- Vercel tiene límites de memoria en funciones serverless
-- Tesseract.js puede consumir bastante memoria
+### Error: "Module not found"
+- Verifica que todas las dependencias estén en `package.json`
+- Ejecuta `npm install` localmente para verificar
 
-## 📊 Monitoreo
+### Error de CAPTCHA/OCR
+- Los errores de OCR son normales ocasionalmente
+- La API tiene reintentos automáticos
+- Revisa los logs para más detalles
 
-- Usa el dashboard de Vercel para ver logs y performance
-- Monitorea los timeouts y errores en la sección Functions
+## 🔄 Actualizaciones Automáticas
 
-## 🔄 Alternativas para Producción
+Cada vez que hagas push al repositorio:
+1. Vercel desplegará automáticamente
+2. Recibirás una URL de preview
+3. Si todo está bien, se desplegará a producción
 
-Para un uso intensivo, considera:
+## 🌐 Dominio Personalizado (Opcional)
 
-1. **VPS/Dedicated Server**: Sin límites de tiempo
-2. **Docker + Cloud Run**: Mejor control sobre recursos
-3. **Railway/Render**: Alternativas con menos restricciones
+Para usar tu propio dominio:
+1. Ve a Settings → Domains en tu proyecto
+2. Agrega tu dominio
+3. Configura los DNS según las instrucciones
 
-## 📞 Soporte
+---
 
-Si encuentras problemas específicos de Vercel, revisa:
-- [Documentación de Vercel](https://vercel.com/docs)
-- [Límites de Functions](https://vercel.com/docs/functions/serverless-functions/runtimes#limits)
+¡Tu API estará lista para uso en producción! 🎉

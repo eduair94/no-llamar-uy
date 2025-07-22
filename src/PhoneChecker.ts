@@ -188,8 +188,10 @@ export class PhoneChecker {
       }
 
       const iframeData = responseData.iframeResponses;
+      console.log("iframeData", iframeData);
       if (iframeData && iframeData.length > 0) {
         const iframeResponse = iframeData[0].phoneValidationResult;
+        console.log("iframeResponse", iframeResponse);
         return iframeResponse;
       }
 
