@@ -81,8 +81,9 @@ export class OCRService {
 
       const processingTime = Date.now() - startTime;
 
-      return {
+      const res = {
         success: true,
+        tempImagePath,
         text: ocrResult.text,
         cleanedText: ocrResult.cleanedText,
         confidence: ocrResult.confidence,
@@ -90,6 +91,8 @@ export class OCRService {
         imageUrl: isBase64 ? "base64-image" : imageInput,
         timestamp: new Date().toISOString(),
       };
+      console.log("Response", res);
+      return res;
     } catch (error) {
       console.error(`❌ Error processing image:`, error);
 

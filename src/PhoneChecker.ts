@@ -770,13 +770,6 @@ export class PhoneChecker {
         },
       });
 
-      // Save the CAPTCHA image temporarily (use /tmp in serverless environments)
-      const tempDir = process.env.VERCEL ? "/tmp" : this.outputDir;
-      const captchaImagePath = path.join(tempDir, `captcha_${Date.now()}.png`);
-      await fs.writeFile(captchaImagePath, imageResponse.data);
-
-      console.log(`📄 CAPTCHA image saved to: ${captchaImagePath}`);
-
       // For Vercel serverless environment, use external OCR API
       const isVercel = !!process.env.VERCEL || !!process.env.OCR_API_URL;
       if (isVercel) {
@@ -805,18 +798,11 @@ export class PhoneChecker {
             }
           );
 
-          // Clean up temp file
-          try {
-            await fs.unlink(captchaImagePath);
-          } catch (e) {
-            console.warn("Could not delete temp file:", e);
-          }
-
           console.log("Ocr response", ocrResponse.data);
 
-          if (ocrResponse.data.success && ocrResponse.data.result.text) {
-            const cleanText = ocrResponse.data.result.text;
-            console.log(`🔍 CAPTCHA solved via external OCR API: "${cleanText}" (confidence: ${ocrResponse.data.result.confidence})`);
+          if (ocrResponse.data.success && ocrResponse.data.cleanedText) {
+            const cleanText = ocrResponse.data.cleanedText;
+            console.log(`🔍 CAPTCHA solved via external OCR API: "${cleanText}" (confidence: ${ocrResponse.data.confidence})`);
             return cleanText;
           } else {
             throw new Error(`External OCR API failed: ${ocrResponse.data.error || "Unknown error"}`);
@@ -825,17 +811,16 @@ export class PhoneChecker {
           console.error("❌ External OCR API failed:", externalOcrError);
           console.log("🔄 Using smart CAPTCHA fallback for serverless environment");
 
-          // Clean up temp file if it exists
-          try {
-            await fs.unlink(captchaImagePath);
-          } catch (e) {
-            // Ignore cleanup errors
-          }
-
           // Return a smart fallback value
           return this.generateSmartCaptchaFallback();
         }
       }
+
+      // Save the CAPTCHA image temporarily (use /tmp in serverless environments)
+      const tempDir = process.env.VERCEL ? "/tmp" : this.outputDir;
+      const captchaImagePath = path.join(tempDir, `captcha_${Date.now()}.png`);
+      await fs.writeFile(captchaImagePath, imageResponse.data);
+      console.log(`📄 CAPTCHA image saved to: ${captchaImagePath}`);
 
       // Local development - use full featured OCR
       console.log("🏠 Running in local environment - using advanced OCR");
