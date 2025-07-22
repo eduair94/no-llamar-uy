@@ -1,6 +1,6 @@
 import axios from "axios";
 import { promises as fs } from "fs";
-import path from "path";
+import * as path from "path";
 import { createWorker, OEM, PSM } from "tesseract.js";
 
 export interface OCRResult {
@@ -33,13 +33,13 @@ export class OCRService {
   }
 
   /**
-   * Processes an image URL and extracts text using OCR
-   * @param imageUrl - The URL of the image to process
+   * Processes an image URL or base64 string and extracts text using OCR
+   * @param imageInput - The URL of the image or base64 encoded image to process
    * @param options - OCR configuration options
    * @returns Promise<OCRResult> - The OCR result
    */
   async processImageUrl(
-    imageUrl: string,
+    imageInput: string,
     options: {
       cookies?: string;
       charWhitelist?: string;
@@ -50,20 +50,19 @@ export class OCRService {
     const startTime = Date.now();
 
     try {
-      console.log(`🔍 Processing image: ${imageUrl}`);
-
-      // Validate URL
-      if (!this.isValidUrl(imageUrl)) {
-        return {
-          success: false,
-          error: "Invalid URL provided",
-          timestamp: new Date().toISOString(),
-          imageUrl,
-        };
+      // Detect if input is base64 or URL
+      const isBase64 = this.isBase64Image(imageInput);
+      
+      if (isBase64) {
+        console.log(`🔍 Processing base64 image (${imageInput.length} characters)`);
+      } else {
+        console.log(`🔍 Processing image URL: ${imageInput}`);
       }
 
-      // Download the image
-      const imageBuffer = await this.downloadImage(imageUrl, options.cookies);
+      // Get image buffer
+      const imageBuffer = isBase64 
+        ? this.base64ToBuffer(imageInput)
+        : await this.downloadImage(imageInput, options.cookies);
 
       // Save temporarily
       const tempImagePath = path.join(this.outputDir, `ocr_${Date.now()}.png`);
@@ -72,7 +71,9 @@ export class OCRService {
       console.log(`📄 Image saved temporarily to: ${tempImagePath}`);
 
       // Process with OCR
-      const ocrResult = options.useAdvanced ? await this.processWithAdvancedOCR(tempImagePath, options) : await this.processWithBasicOCR(tempImagePath, options);
+      const ocrResult = options.useAdvanced 
+        ? await this.processWithAdvancedOCR(tempImagePath, options) 
+        : await this.processWithBasicOCR(tempImagePath, options);
 
       // Clean up temp file
       try {
@@ -90,7 +91,7 @@ export class OCRService {
         cleanedText: ocrResult.cleanedText,
         confidence: ocrResult.confidence,
         processingTime,
-        imageUrl,
+        imageUrl: isBase64 ? 'base64-image' : imageInput,
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
@@ -102,7 +103,7 @@ export class OCRService {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
         processingTime,
-        imageUrl,
+        imageUrl: this.isBase64Image(imageInput) ? 'base64-image' : imageInput,
         timestamp: new Date().toISOString(),
       };
     }
@@ -301,6 +302,54 @@ export class OCRService {
     // Apply some common corrections (but keep original as primary choice)
     // This is conservative - we return the original cleaned text
     return cleaned;
+  }
+
+  /**
+   * Checks if the input string is a base64 encoded image
+   * @param input - The input string to check
+   * @returns boolean indicating if it's a base64 image
+   */
+  private isBase64Image(input: string): boolean {
+    // Check for data URL format
+    if (input.startsWith('data:image/')) {
+      return true;
+    }
+    
+    // Check for raw base64 (heuristic: very long string without URL patterns)
+    if (!input.startsWith('http://') && 
+        !input.startsWith('https://') && 
+        input.length > 100 &&
+        /^[A-Za-z0-9+/]+=*$/.test(input.replace(/\s/g, ''))) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * Converts base64 string to Buffer
+   * @param base64String - The base64 string (with or without data URL prefix)
+   * @returns Buffer containing the image data
+   */
+  private base64ToBuffer(base64String: string): Buffer {
+    try {
+      // Remove data URL prefix if present
+      let base64Data = base64String;
+      if (base64String.startsWith('data:image/')) {
+        const base64Index = base64String.indexOf(',');
+        if (base64Index !== -1) {
+          base64Data = base64String.substring(base64Index + 1);
+        }
+      }
+      
+      // Remove any whitespace
+      base64Data = base64Data.replace(/\s/g, '');
+      
+      // Convert to buffer
+      return Buffer.from(base64Data, 'base64');
+    } catch (error) {
+      throw new Error(`Failed to convert base64 to buffer: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 
   /**

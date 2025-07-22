@@ -1,7 +1,7 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import rateLimit from "express-rate-limit";
+import cors = require("cors");
+import dotenv = require("dotenv");
+import express = require("express");
+import { rateLimit } from "express-rate-limit";
 import { OCRResult, OCRService } from "./OCRService";
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.use(express.json());
 // Rate limiting - 100 requests per 15 minutes per IP
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 10000, // Limit each IP to 100 requests per windowMs
   message: {
     error: "Too many requests from this IP, please try again later.",
     retryAfter: "15 minutes",
@@ -57,15 +57,24 @@ app.post("/ocr", async (req, res) => {
     if (typeof imageUrl !== "string") {
       return res.status(400).json({
         success: false,
-        error: "imageUrl must be a string",
+        error: "imageUrl must be a string (URL or base64)",
         timestamp: new Date().toISOString(),
       });
+    }
+
+    // Detect if it's a base64 string or URL
+    const isBase64 = imageUrl.startsWith("data:image/") || (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://") && imageUrl.length > 100);
+
+    if (isBase64) {
+      console.log(`📥 OCR request received for base64 image (${imageUrl.length} characters)`);
+    } else {
+      console.log(`📥 OCR request received for URL: ${imageUrl}`);
     }
 
     console.log(`📥 OCR request received for: ${imageUrl}`);
     console.log(`⚙️ Options:`, options);
 
-    // Process the image
+    // Process the image (OCRService will handle both URLs and base64)
     const result: OCRResult = await ocrService.processImageUrl(imageUrl, options);
 
     // Return result
@@ -101,7 +110,14 @@ app.post("/ocr/captcha", async (req, res) => {
       });
     }
 
-    console.log(`🎯 CAPTCHA OCR request received for: ${imageUrl}`);
+    // Detect if it's a base64 string or URL
+    const isBase64 = imageUrl.startsWith("data:image/") || (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://") && imageUrl.length > 100);
+
+    if (isBase64) {
+      console.log(`🎯 CAPTCHA OCR request received for base64 image (${imageUrl.length} characters)`);
+    } else {
+      console.log(`🎯 CAPTCHA OCR request received for URL: ${imageUrl}`);
+    }
 
     // Process with CAPTCHA-optimized settings
     const result: OCRResult = await ocrService.processImageUrl(imageUrl, {
@@ -204,12 +220,12 @@ app.get("/", (req, res) => {
   res.json({
     service: "OCR API",
     version: "1.0.0",
-    description: "Optical Character Recognition API using Tesseract.js",
+    description: "Optical Character Recognition API using Tesseract.js - supports both image URLs and base64 encoded images",
     endpoints: {
       "GET /health": "Health check",
-      "POST /ocr": "Process single image URL with OCR",
-      "POST /ocr/captcha": "Process CAPTCHA image with optimized settings",
-      "POST /ocr/batch": "Process multiple image URLs (max 10)",
+      "POST /ocr": "Process single image URL or base64 with OCR",
+      "POST /ocr/captcha": "Process CAPTCHA image (URL or base64) with optimized settings",
+      "POST /ocr/batch": "Process multiple image URLs/base64 (max 10)",
       "GET /": "API documentation",
     },
     examples: {
@@ -224,6 +240,16 @@ app.get("/", (req, res) => {
           },
         },
       },
+      basicOCRBase64: {
+        url: "POST /ocr",
+        body: {
+          imageUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...",
+          options: {
+            useAdvanced: true,
+            captchaMode: false,
+          },
+        },
+      },
       captchaOCR: {
         url: "POST /ocr/captcha",
         body: {
@@ -232,10 +258,17 @@ app.get("/", (req, res) => {
           charWhitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
         },
       },
+      captchaOCRBase64: {
+        url: "POST /ocr/captcha",
+        body: {
+          imageUrl: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//2Q==",
+          useAdvanced: true,
+        },
+      },
       batchOCR: {
         url: "POST /ocr/batch",
         body: {
-          imageUrls: ["https://example.com/image1.png", "https://example.com/image2.png"],
+          imageUrls: ["https://example.com/image1.png", "data:image/png;base64,iVBORw0KGgo..."],
           options: {
             captchaMode: true,
             useAdvanced: false,

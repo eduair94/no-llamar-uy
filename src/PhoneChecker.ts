@@ -781,14 +781,14 @@ export class PhoneChecker {
       const isVercel = !!process.env.VERCEL || !!process.env.OCR_API_URL;
       if (isVercel) {
         console.log("🌐 Running in Vercel serverless environment - using external OCR API");
-
+        const captchaBase64 = `data:image/png;base64,${imageResponse.data.toString("base64")}`;
         try {
           // Use external OCR API to avoid WASM issues
           const ocrApiUrl = process.env.OCR_API_URL || "http://localhost:3001";
           const ocrResponse = await axios.post(
             `${ocrApiUrl}/ocr/captcha`,
             {
-              imageUrl: captchaUrl,
+              imageUrl: captchaBase64,
               cookies: cookieString,
               useAdvanced: true,
               options: {

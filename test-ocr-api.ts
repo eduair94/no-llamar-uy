@@ -17,16 +17,27 @@ async function testOCRAPI() {
     console.log("✅ Health check:", healthResponse.data);
 
     // Test OCR with a sample image URL
-    console.log("\n2. Testing OCR endpoint...");
+    console.log("\n2. Testing OCR endpoint with URL...");
     const testImageUrl = "https://via.placeholder.com/200x50/000000/FFFFFF?text=TEST123";
 
     const ocrResponse = await axios.post(`${OCR_API_URL}/ocr`, {
       imageUrl: testImageUrl,
     });
-    console.log("✅ OCR result:", ocrResponse.data);
+    console.log("✅ OCR URL result:", ocrResponse.data);
+
+    // Test OCR with base64 image
+    console.log("\n3. Testing OCR endpoint with base64...");
+    // Simple 1x1 pixel base64 image for testing
+    const testBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+
+    const ocrBase64Response = await axios.post(`${OCR_API_URL}/ocr`, {
+      imageUrl: testBase64,
+      options: { captchaMode: true }
+    });
+    console.log("✅ OCR base64 result:", ocrBase64Response.data);
 
     // Test CAPTCHA endpoint
-    console.log("\n3. Testing CAPTCHA endpoint...");
+    console.log("\n4. Testing CAPTCHA endpoint...");
     const captchaResponse = await axios.post(`${OCR_API_URL}/ocr/captcha`, {
       imageUrl: testImageUrl,
     });
