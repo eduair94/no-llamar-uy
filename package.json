@@ -16,7 +16,7 @@
     "test:api": "bash test_api.sh",
     "test:api:complete": "bash test-api-complete.sh",
     "test:api:node": "ts-node test-api.ts",
-    "test:vercel": "echo 'Run: npm run test:api:node https://your-project.vercel.app'"
+    "test:vercel": "npm run test:api:node https://no-llamar-uy.vercel.app"
   },
   "keywords": [
     "express",

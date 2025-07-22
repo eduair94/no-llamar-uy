@@ -49,12 +49,62 @@
       .test-button:hover {
         background: #0056b3;
       }
+      .github-link {
+        display: inline-block;
+        background: #333;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+        font-weight: bold;
+      }
+      .github-link:hover {
+        background: #555;
+      }
+      .header-section {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .github-link {
+        display: inline-block;
+        background: #24292e;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-weight: bold;
+      }
+      .github-link:hover {
+        background: #1b1f23;
+        color: white;
+        text-decoration: none;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        color: #666;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>🇺🇾 No Llamar Uruguay API</h1>
-      <p>API para validar números de teléfono uruguayos contra el registro de URSEC.</p>
+      <div class="header-section">
+        <h1>🇺🇾 No Llamar Uruguay API</h1>
+        <p>API para validar números de teléfono uruguayos contra el registro de URSEC.</p>
+        <a href="https://github.com/eduair94/no-llamar-uy" target="_blank" class="github-link">
+          📁 Ver código en GitHub
+        </a>
+      </div>
+      
+      <div style="text-align: center; margin: 20px 0;">
+        <a href="https://github.com/eduair94/no-llamar-uy" target="_blank" class="github-link">
+          📂 Ver código en GitHub
+        </a>
+      </div>
 
       <div class="endpoint">
         <h3>Health Check</h3>
@@ -75,6 +125,11 @@
       <div class="code">
         curl https://no-llamar-uy.vercel.app/api<br />
         curl https://no-llamar-uy.vercel.app/api/check/98297150
+      </div>
+      
+      <div class="footer">
+        <p>Desarrollado por <a href="https://github.com/eduair94" target="_blank">@eduair94</a></p>
+        <p>Código fuente disponible en <a href="https://github.com/eduair94/no-llamar-uy" target="_blank">GitHub</a></p>
       </div>
     </div>
 

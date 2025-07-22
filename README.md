@@ -92,19 +92,19 @@ La API estará disponible en `http://localhost:3000`
 #### Consulta básica
 
 ```bash
-curl http://localhost:3000/check/95614500
+curl https://no-llamar-uy.vercel.app/api/check/95614500
 ```
 
 #### Con código de país
 
 ```bash
-curl http://localhost:3000/check/59895614500
+curl https://no-llamar-uy.vercel.app/api/check/59895614500
 ```
 
 #### Con formato internacional
 
 ```bash
-curl http://localhost:3000/check/+59895614500
+curl https://no-llamar-uy.vercel.app/api/check/+59895614500
 ```
 
 ## 📊 Respuesta de la API
