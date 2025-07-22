@@ -1,115 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>No Llamar Uruguay API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        .endpoint {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border-left: 4px solid #007bff;
-        }
-        .code {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-        }
-        .test-button {
-            background: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .test-button:hover {
-            background: #0056b3;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      .endpoint {
+        background: #f8f9fa;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+      }
+      .code {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: "Courier New", monospace;
+        margin: 10px 0;
+      }
+      .test-button {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .test-button:hover {
+        background: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>🇺🇾 No Llamar Uruguay API</h1>
-        <p>API para validar números de teléfono uruguayos contra el registro de URSEC.</p>
-        
-        <div class="endpoint">
-            <h3>Health Check</h3>
-            <div class="code">GET /api</div>
-            <button class="test-button" onclick="testHealth()">🔄 Probar</button>
-        </div>
-        
-        <div class="endpoint">
-            <h3>Verificar Número</h3>
-            <div class="code">GET /api/check/{numero}</div>
-            <button class="test-button" onclick="testPhone('98297150')">🔄 Probar con 98297150</button>
-            <button class="test-button" onclick="testPhone('59898297150')">🔄 Probar con 59898297150</button>
-        </div>
-        
-        <div id="result" style="margin-top: 20px;"></div>
-        
-        <h3>📋 Ejemplos de uso:</h3>
-        <div class="code">
-curl https://your-project.vercel.app/api<br>
-curl https://your-project.vercel.app/api/check/98297150
-        </div>
+      <h1>🇺🇾 No Llamar Uruguay API</h1>
+      <p>API para validar números de teléfono uruguayos contra el registro de URSEC.</p>
+
+      <div class="endpoint">
+        <h3>Health Check</h3>
+        <div class="code">GET /api</div>
+        <button class="test-button" onclick="testHealth()">🔄 Probar</button>
+      </div>
+
+      <div class="endpoint">
+        <h3>Verificar Número</h3>
+        <div class="code">GET /api/check/{numero}</div>
+        <button class="test-button" onclick="testPhone('98297150')">🔄 Probar con 98297150</button>
+        <button class="test-button" onclick="testPhone('59898297150')">🔄 Probar con 59898297150</button>
+      </div>
+
+      <div id="result" style="margin-top: 20px"></div>
+
+      <h3>📋 Ejemplos de uso:</h3>
+      <div class="code">
+        curl https://no-llamar-uy.vercel.app/api<br />
+        curl https://no-llamar-uy.vercel.app/api/check/98297150
+      </div>
     </div>
 
     <script>
-        async function testHealth() {
-            const result = document.getElementById('result');
-            result.innerHTML = '<p>⏳ Probando health check...</p>';
-            
-            try {
-                const response = await fetch('/api');
-                const data = await response.json();
-                result.innerHTML = `
+      async function testHealth() {
+        const result = document.getElementById("result");
+        result.innerHTML = "<p>⏳ Probando health check...</p>";
+
+        try {
+          const response = await fetch("/api");
+          const data = await response.json();
+          result.innerHTML = `
                     <h3>✅ Health Check Result:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
-            } catch (error) {
-                result.innerHTML = `<h3>❌ Error:</h3><p>${error.message}</p>`;
-            }
+        } catch (error) {
+          result.innerHTML = `<h3>❌ Error:</h3><p>${error.message}</p>`;
         }
-        
-        async function testPhone(number) {
-            const result = document.getElementById('result');
-            result.innerHTML = `<p>⏳ Verificando número ${number}...</p>`;
-            
-            try {
-                const response = await fetch(`/api/check/${number}`);
-                const data = await response.json();
-                result.innerHTML = `
+      }
+
+      async function testPhone(number) {
+        const result = document.getElementById("result");
+        result.innerHTML = `<p>⏳ Verificando número ${number}...</p>`;
+
+        try {
+          const response = await fetch(`/api/check/${number}`);
+          const data = await response.json();
+          result.innerHTML = `
                     <h3>📱 Result for ${number}:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
-            } catch (error) {
-                result.innerHTML = `<h3>❌ Error:</h3><p>${error.message}</p>`;
-            }
+        } catch (error) {
+          result.innerHTML = `<h3>❌ Error:</h3><p>${error.message}</p>`;
         }
+      }
     </script>
-</body>
+  </body>
 </html>

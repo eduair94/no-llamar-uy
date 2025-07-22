@@ -80,7 +80,7 @@ export class PhoneChecker {
 
       // Create HTTPS agent that can handle certificate issues
       const httpsAgent = new https.Agent({
-        rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Only ignore certs in development
+        rejectUnauthorized: false, // Only ignore certs in development
         keepAlive: true,
         timeout: 10000,
         maxSockets: 10,
