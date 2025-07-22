@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import { OCRResult, OCRService } from "./OCRService";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const port = process.env.OCR_PORT || 3001;
