@@ -1,7 +1,6 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import { PhoneChecker } from "../../src/PhoneChecker";
 import { PhoneValidator } from "../../src/PhoneValidator";
-
 // Initialize services
 const phoneValidator = new PhoneValidator();
 const phoneChecker = new PhoneChecker();

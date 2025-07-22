@@ -41,6 +41,7 @@ export class OCRService {
   async processImageUrl(
     imageUrl: string,
     options: {
+      cookies?: string;
       charWhitelist?: string;
       useAdvanced?: boolean;
       captchaMode?: boolean;
@@ -62,7 +63,7 @@ export class OCRService {
       }
 
       // Download the image
-      const imageBuffer = await this.downloadImage(imageUrl);
+      const imageBuffer = await this.downloadImage(imageUrl, options.cookies);
 
       // Save temporarily
       const tempImagePath = path.join(this.outputDir, `ocr_${Date.now()}.png`);
@@ -112,12 +113,13 @@ export class OCRService {
    * @param imageUrl - The URL to download from
    * @returns Promise<Buffer> - The image buffer
    */
-  private async downloadImage(imageUrl: string): Promise<Buffer> {
+  private async downloadImage(imageUrl: string, cookies?: string): Promise<Buffer> {
     try {
       const response = await axios.get(imageUrl, {
         timeout: 10000,
         responseType: "arraybuffer",
         headers: {
+          cookies: cookies || "",
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
           Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
           "Accept-Language": "es-ES,es;q=0.9",

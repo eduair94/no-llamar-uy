@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import * as cheerio from "cheerio";
+import dotenv from "dotenv";
 import { promises as fs } from "fs";
 import https from "https";
 import path from "path";
 import { createWorker, OEM, PSM } from "tesseract.js";
+dotenv.config();
 
 // Type definitions for iframe parsing
 interface IframeInfo {
@@ -776,7 +778,7 @@ export class PhoneChecker {
       console.log(`📄 CAPTCHA image saved to: ${captchaImagePath}`);
 
       // For Vercel serverless environment, use external OCR API
-      const isVercel = !!process.env.VERCEL;
+      const isVercel = !!process.env.VERCEL || !!process.env.OCR_API_URL;
       if (isVercel) {
         console.log("🌐 Running in Vercel serverless environment - using external OCR API");
 
@@ -784,10 +786,11 @@ export class PhoneChecker {
           // Use external OCR API to avoid WASM issues
           const ocrApiUrl = process.env.OCR_API_URL || "http://localhost:3001";
           const ocrResponse = await axios.post(
-            `${ocrApiUrl}/ocr`,
+            `${ocrApiUrl}/ocr/captcha`,
             {
               imageUrl: captchaUrl,
               cookies: cookieString,
+              useAdvanced: true,
               options: {
                 whitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
                 serverless: true,
@@ -808,6 +811,8 @@ export class PhoneChecker {
           } catch (e) {
             console.warn("Could not delete temp file:", e);
           }
+
+          console.log("Ocr response", ocrResponse.data);
 
           if (ocrResponse.data.success && ocrResponse.data.result.text) {
             const cleanText = ocrResponse.data.result.text;

@@ -1,8 +1,8 @@
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import { OCRResult, OCRService } from "./OCRService";
-import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
@@ -90,7 +90,7 @@ app.post("/ocr", async (req, res) => {
 // CAPTCHA-specific endpoint with optimized settings
 app.post("/ocr/captcha", async (req, res) => {
   try {
-    const { imageUrl, charWhitelist, useAdvanced = false } = req.body;
+    const { imageUrl, charWhitelist, useAdvanced = false, cookies } = req.body;
 
     // Validate input
     if (!imageUrl) {
@@ -106,6 +106,7 @@ app.post("/ocr/captcha", async (req, res) => {
     // Process with CAPTCHA-optimized settings
     const result: OCRResult = await ocrService.processImageUrl(imageUrl, {
       captchaMode: true,
+      cookies,
       useAdvanced: useAdvanced,
       charWhitelist: charWhitelist || "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
     });
