@@ -161,9 +161,9 @@ async function performOCR(imagePath: string, options: any = {}): Promise<{ text:
   // Try multiple recognition configurations
   const configs = [
     { psr: PSM.SINGLE_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
-    { psr: PSM.SINGLE_WORD, oem: OEM.LSTM_ONLY },
-    { psr: PSM.SINGLE_CHAR, oem: OEM.TESSERACT_ONLY },
-    { psr: PSM.RAW_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
+    //{ psr: PSM.SINGLE_WORD, oem: OEM.LSTM_ONLY },
+    //{ psr: PSM.SINGLE_CHAR, oem: OEM.TESSERACT_ONLY },
+    //{ psr: PSM.RAW_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
   ];
 
   const recognitionResults = [];
