@@ -32,16 +32,17 @@ async function testOCRAPI() {
 
     const ocrBase64Response = await axios.post(`${OCR_API_URL}/ocr`, {
       imageUrl: testBase64,
-      options: { captchaMode: true }
+      options: { captchaMode: true, useAdvanced: true },
     });
     console.log("✅ OCR base64 result:", ocrBase64Response.data);
 
-    // Test CAPTCHA endpoint
-    console.log("\n4. Testing CAPTCHA endpoint...");
+    // Test CAPTCHA endpoint with advanced OCR
+    console.log("\n4. Testing CAPTCHA endpoint with advanced OCR...");
     const captchaResponse = await axios.post(`${OCR_API_URL}/ocr/captcha`, {
       imageUrl: testImageUrl,
+      useAdvanced: true,
     });
-    console.log("✅ CAPTCHA result:", captchaResponse.data);
+    console.log("✅ Advanced CAPTCHA result:", captchaResponse.data);
 
     console.log("\n🎉 All tests passed!");
   } catch (error) {

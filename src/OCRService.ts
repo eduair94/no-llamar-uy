@@ -52,7 +52,7 @@ export class OCRService {
     try {
       // Detect if input is base64 or URL
       const isBase64 = this.isBase64Image(imageInput);
-      
+
       if (isBase64) {
         console.log(`🔍 Processing base64 image (${imageInput.length} characters)`);
       } else {
@@ -60,9 +60,7 @@ export class OCRService {
       }
 
       // Get image buffer
-      const imageBuffer = isBase64 
-        ? this.base64ToBuffer(imageInput)
-        : await this.downloadImage(imageInput, options.cookies);
+      const imageBuffer = isBase64 ? this.base64ToBuffer(imageInput) : await this.downloadImage(imageInput, options.cookies);
 
       // Save temporarily
       const tempImagePath = path.join(this.outputDir, `ocr_${Date.now()}.png`);
@@ -71,9 +69,7 @@ export class OCRService {
       console.log(`📄 Image saved temporarily to: ${tempImagePath}`);
 
       // Process with OCR
-      const ocrResult = options.useAdvanced 
-        ? await this.processWithAdvancedOCR(tempImagePath, options) 
-        : await this.processWithBasicOCR(tempImagePath, options);
+      const ocrResult = options.useAdvanced ? await this.processWithAdvancedOCR(tempImagePath, options) : await this.processWithBasicOCR(tempImagePath, options);
 
       // Clean up temp file
       try {
@@ -91,7 +87,7 @@ export class OCRService {
         cleanedText: ocrResult.cleanedText,
         confidence: ocrResult.confidence,
         processingTime,
-        imageUrl: isBase64 ? 'base64-image' : imageInput,
+        imageUrl: isBase64 ? "base64-image" : imageInput,
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
@@ -103,7 +99,7 @@ export class OCRService {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
         processingTime,
-        imageUrl: this.isBase64Image(imageInput) ? 'base64-image' : imageInput,
+        imageUrl: this.isBase64Image(imageInput) ? "base64-image" : imageInput,
         timestamp: new Date().toISOString(),
       };
     }
@@ -180,34 +176,42 @@ export class OCRService {
 
     const charWhitelist = options.charWhitelist || (options.captchaMode ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" : "");
 
-    // Configure Tesseract for optimal recognition
+    // Configure Tesseract for optimal recognition (matching PhoneChecker implementation)
     await worker.setParameters({
-      ...(charWhitelist && { tessedit_char_whitelist: charWhitelist }),
+      // Character whitelist - only alphanumeric characters
+      tessedit_char_whitelist: charWhitelist,
+      // Page segmentation mode - treat the image as a single text line
       tessedit_pageseg_mode: options.captchaMode ? PSM.SINGLE_LINE : PSM.AUTO,
+      // OCR Engine Mode - use both legacy and LSTM engines for better accuracy
       tessedit_ocr_engine_mode: OEM.TESSERACT_LSTM_COMBINED,
       ...(options.captchaMode && {
-        // CAPTCHA-specific optimizations
+        // Improve recognition for small text
         tessedit_do_invert: "1",
+        // Additional parameters for better CAPTCHA recognition
         classify_enable_learning: "0",
         classify_enable_adaptive_matcher: "0",
         textord_really_old_xheight: "1",
         textord_min_xheight: "10",
         preserve_interword_spaces: "0",
+        // Improve edge detection
         edges_max_children_per_outline: "40",
+        // Noise reduction
         textord_noise_sizelimit: "0.5",
+        // Improve character recognition
         tessedit_char_unblacklist: "",
+        // Better handling of small fonts
         textord_min_linesize: "2.5",
       }),
     });
 
     let recognitionResults = [];
 
-    // Try recognition with different configurations for better accuracy
+    // Try recognition with different configurations for better accuracy (matching PhoneChecker)
     const configs = [
       { psr: PSM.SINGLE_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
       { psr: PSM.SINGLE_WORD, oem: OEM.LSTM_ONLY },
-      { psr: PSM.AUTO, oem: OEM.TESSERACT_LSTM_COMBINED },
       { psr: PSM.SINGLE_CHAR, oem: OEM.TESSERACT_ONLY },
+      { psr: PSM.RAW_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
     ];
 
     for (const config of configs) {
@@ -222,7 +226,8 @@ export class OCRService {
         } = await worker.recognize(imagePath);
         const cleanedText = options.captchaMode ? this.cleanCaptchaText(text) : text.trim();
 
-        if (cleanedText && (!options.captchaMode || (cleanedText.length >= 3 && cleanedText.length <= 8))) {
+        // For CAPTCHA mode, filter by length (matching PhoneChecker logic)
+        if (cleanedText && (!options.captchaMode || (cleanedText.length >= 4 && cleanedText.length <= 8))) {
           recognitionResults.push({
             text,
             cleanedText,
@@ -237,7 +242,7 @@ export class OCRService {
 
     await worker.terminate();
 
-    // Sort by confidence and length preference for CAPTCHAs
+    // Sort by confidence and length preference for CAPTCHAs (matching PhoneChecker logic)
     if (options.captchaMode) {
       recognitionResults.sort((a, b) => {
         // Prefer results with length 5-6 (typical CAPTCHA length)
@@ -289,18 +294,33 @@ export class OCRService {
     // Remove all non-alphanumeric characters
     let cleaned = rawText.replace(/[^a-zA-Z0-9]/g, "");
 
-    // Common OCR misrecognitions for CAPTCHAs
+    // Common OCR misrecognitions for CAPTCHAs (matching PhoneChecker implementation)
     const corrections: { [key: string]: string } = {
       "0": "O", // Zero to letter O
+      O: "0", // Letter O to zero (try both)
       "1": "I", // One to letter I
+      I: "1", // Letter I to one
       "5": "S", // Five to letter S
+      S: "5", // Letter S to five
       "6": "G", // Six to letter G
+      G: "6", // Letter G to six
       "8": "B", // Eight to letter B
+      B: "8", // Letter B to eight
       "2": "Z", // Two to letter Z
+      Z: "2", // Letter Z to two
     };
 
-    // Apply some common corrections (but keep original as primary choice)
-    // This is conservative - we return the original cleaned text
+    // Apply corrections and return multiple possibilities
+    const possibilities = [cleaned];
+
+    // Try common substitutions
+    for (const [from, to] of Object.entries(corrections)) {
+      if (cleaned.includes(from)) {
+        possibilities.push(cleaned.replace(new RegExp(from, "g"), to));
+      }
+    }
+
+    // Return the original cleaned text (we might want to try alternatives later)
     return cleaned;
   }
 
@@ -311,18 +331,15 @@ export class OCRService {
    */
   private isBase64Image(input: string): boolean {
     // Check for data URL format
-    if (input.startsWith('data:image/')) {
+    if (input.startsWith("data:image/")) {
       return true;
     }
-    
+
     // Check for raw base64 (heuristic: very long string without URL patterns)
-    if (!input.startsWith('http://') && 
-        !input.startsWith('https://') && 
-        input.length > 100 &&
-        /^[A-Za-z0-9+/]+=*$/.test(input.replace(/\s/g, ''))) {
+    if (!input.startsWith("http://") && !input.startsWith("https://") && input.length > 100 && /^[A-Za-z0-9+/]+=*$/.test(input.replace(/\s/g, ""))) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -335,20 +352,20 @@ export class OCRService {
     try {
       // Remove data URL prefix if present
       let base64Data = base64String;
-      if (base64String.startsWith('data:image/')) {
-        const base64Index = base64String.indexOf(',');
+      if (base64String.startsWith("data:image/")) {
+        const base64Index = base64String.indexOf(",");
         if (base64Index !== -1) {
           base64Data = base64String.substring(base64Index + 1);
         }
       }
-      
+
       // Remove any whitespace
-      base64Data = base64Data.replace(/\s/g, '');
-      
+      base64Data = base64Data.replace(/\s/g, "");
+
       // Convert to buffer
-      return Buffer.from(base64Data, 'base64');
+      return Buffer.from(base64Data, "base64");
     } catch (error) {
-      throw new Error(`Failed to convert base64 to buffer: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to convert base64 to buffer: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   }
 
