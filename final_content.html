@@ -1,0 +1,1051 @@
+
+
+		
+		
+		
+		
+		
+	
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+<!DOCTYPE html>
+<html
+	lang="es">
+<head>
+
+
+<script type="text/javascript">
+var URL_APP = "/tramites-en-linea/TramitesEnLinea";
+var divsInsteadOfTable = true;
+var ERROR_NUMBER = 'Error <TOK1> de <TOK2>';			
+var BTN_ANTERIOR = '<< Volver al paso anterior';
+var BTN_SIGUIENTE = 'Continuar al paso siguiente >>';
+</script>
+
+<title>URSEC - Trámites en Línea</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="manifest" href="/tramites-en-linea/TramitesEnLinea/page/includes/manifest.jsp"><meta http-equiv="X-UA-Compatible" content="IE=edge"><script language="javascript" src="/tramites-en-linea/TramitesEnLinea/portal/js/ApiaTramites.js"></script><link href="/tramites-en-linea/TramitesEnLinea/css/base/reset.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/typography.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/layout.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/common.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/pages/fileTypes/files.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/execution.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/modules/formcheck.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/common/common.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/common/portalForm.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/anim.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/customExecution.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/paddings.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/styleExecution.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/styleFormEdicion.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/execution/tablas.css"  rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/modernizr.custom.js"></script><!-- MOOTOOLS --><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/mootools-core-1.4.5-full-compat.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/mootools-more-1.4.0.1-compat.js"></script><!-- MOBILE --><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/mobile/swipe.js"></script><!-- FORMCHECK PARA VALIDAR FORMS--><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/formcheck/lang/es.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/aes/aes.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/formcheck/formcheckPortalForm.js"></script><!-- CONTROLADOR DE MODALS --><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/modalController.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/scroller.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/tabs.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/modal.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/generics.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/numeric.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/tabs.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/datepicker/datepicker.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/MutationObserver.js"></script><link rel="shortcut icon" href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/favicon.ico"><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/colorpicker/mooRainbow.js"></script><link rel="stylesheet" href="/tramites-en-linea/TramitesEnLinea/js/colorpicker/mooRainbow.css" type="text/css" media="all"><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/includes/campaigns.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/externalAccess/postmessage.js"></script><script type="text/javascript">
+	
+		var portalFormMode 			= true;
+		var MOBILE 					= false;
+		var CURRENT_USER_LOGIN 		= "externo";
+		var CURRENT_ENVIRONMENT		= "1";
+		var CURRENT_ENVIRONMENT_NAME= "CIUDADANO";
+		var	sp;
+		var CONTEXT					= "/tramites-en-linea/TramitesEnLinea";
+		var LANG_CODE				= "es";
+		var STYLE					= "estilo_agesic";
+		var TAB_ID					= "1752698122905";
+		var TAB_ID_REQUEST			= "&tabId=1752698122905&tokenId=1752698122346";
+		var WAIT_A_SECOND			= 'Espere un momento';
+		var GNR_TIT_WARNING 		= 'Advertencia';
+		var GNR_CHK_ONLY_ONE 		= 'Debe seleccionar solo un registro.';
+		var GNR_CHK_AT_LEAST_ONE 	= 'Debe seleccionar un registro.';
+		var GNR_MORE_RECORDS		= 'No hay registros para la consulta realizada';
+		var GNR_TOT_RECORDS			= 'Total de registros';
+		var GNR_TOT_RECORDS_REACHED	= 'Se ha llegado a la cantidad máxima de registros. Utilice un filtro para obtener otros registros.';
+		
+		var GNR_NAV_FIRST			= 'Ir al primero';
+		var GNR_NAV_PREV			= 'Ir al anterior';
+		var GNR_NAV_NEXT			= 'Ir al siguiente';
+		var GNR_NAV_LAST			= 'Ir al último';
+		var GNR_NAV_REFRESH			= 'Actualizar';
+		 
+		
+		var GNR_NAV_ADM_CEATE		= 'Crear';
+		var GNR_NAV_ADM_UPDATE		= 'Modificar';
+		var GNR_NAV_ADM_CLONE		= 'Clonar';
+		var GNR_NAV_ADM_DELETE		= 'Eliminar';
+		var GNR_NAV_ADM_DEPENDENCIES= 'Dependencias';
+		var GNR_NAV_ADM_CLOSE		= 'Cerrar';
+		
+		var BTN_CONFIRM				= 'Confirmar';
+		var BTN_CANCEL				= 'Cancelar';
+		
+		var BTN_CLOSE				= 'Cerrar';
+		
+		var GRID_BTN_UP				= 'Subir';
+		var GRID_BTN_DOWN			= 'Bajar';
+		var GRID_BTN_ADD			= 'Agregar';
+		var GRID_BTN_DELETE			= 'Eliminar';
+		var GRID_MSG_SEL_ROW		= 'Debe seleccionar al menos una fila.';
+		var GRID_MAX_ROW_REACHED	= 'Se alcanzó la cantidad máxima de registros.';
+		var GNR_INVALID_NAME 		= 'El nombre sólo puede contener letras, números y \'_\'.';
+		
+		var MSG_FEC_FIN_MAY_FEC_INI	= 'La fecha de finalización debe ser mayor que la fecha de inicio.';
+		var MSG_FEC_INI_MEN_TODAY	= '\"Fecha desde\" no puede ser anterior a hoy.';
+		var MSG_FEC_FIN_MEN_TODAY	= '\"Fecha hasta\" no puede ser anterior a hoy.';
+		
+		var GNR_ORDER_BY			= "Ordenar por:"; 
+		var GNR_TITILE_MESSAGES		= "Mensajes"; 
+		var GNR_TITILE_EXCEPTIONS	= 'Excepciones';
+		
+		var CONFIRM_ELEMENT_DELETE	= 'Borrar el registro seleccionado';
+		var CONFIRM_ELEMENT_INIT	= '¿Desea inicializar el/los registro/s?';
+		var CONFIRM_FNC_DELETE		= '¿Desea eliminar la carpeta y todas sus subcarpetas?';
+		
+		var MSG_ELE_ONLY_READ		= 'Usted posee permisos de sólo lectura sobre el elemento seleccionado. ¿Desea acceder sin la posibilidad de guardar los cambios?';
+		var MSG_ELE_CANT_DELETE		= 'LBL_NOT_FOUND : msgEleCantDelete';
+		var MSG_ELE_CANT_CLONE		= 'LBL_NOT_FOUND : msgEleCantClone';
+		var MSG_ELE_CANT_BLOCK		= 'El elemento seleccionado no se puede bloquear.';
+		
+		var COMPLETE_OK				= 'Operación completa.';
+		
+		var DOWNLOADING				= 'Descargando el archivo';
+		
+		var BTN_MARK_FRM_TO_SIGN	= 'Marcar para firmar';
+		var BTN_VERIFY_FRM_SIGN		= 'Verificar firmas';
+		
+		var MSG_PERMISSIONS_ERROR 	= 'Al menos un usuario debe tener acceso de escritura.';
+		var MSG_USE_PROY_PERMS 		= '¿Desea utilizar los permisos del proyecto y perder los permisos definidos?';
+		var MSG_PERM_WILL_BE_LOST	= 'Se perderán los permisos de lectura y modificación definidos. ¿Desea continuar?';
+		
+		var MSG_DOC_LOCKED_BY_USR		= 'El documento ya se encuentra bloqueado por otro usuario.';
+		var MSG_DOC_MUST_BE_LOCKED		= 'El documento debe estar bloqueado por el usuario actual para permitir modificaciones.';
+		var MSG_DOC_TRA_LOCKED_BY_USR	= 'Existe una traducción del documento bloqueada por el usuario: <TOK1>.';
+
+		var MSG_LOADING				= 'Cargando...';
+		
+		var MSG_ERROR_DATE			= 'La fecha de inicio debe ser anterior a la fecha de finalizaci&#243;n.';
+		
+		var BTN_PRINT				= 'Imprimir';			
+		
+		var MSG_INVALID_REG_EXP		= 'La expresión regular no fue validada.';
+		var ERR_UNEXPECTED			= 'Error inesperado, por favor intente nuevamente.';
+		var ERR_NOTHING_TO_LOAD		= 'No hay nada para cargar a partir de la respuesta.';
+		var ERR_OPEN_URL			= 'No se puede abrir <TOK1> en <TOK2>.';
+		
+		var GNR_PER_DAT_ING 		= 'Est&#225; por perder las modificaciones realizadas. ¿Desea continuar?';
+		
+		var GNR_EMPTY_EMAIL_LIST 	= 'No existen destinatarios para el e-mail a enviar.';
+		
+		var GNR_NO_VALUE_AVAILABLE 	= 'Se utiliza el idioma por defecto del template, el idioma solicitado no est&#225; definido.';
+		
+		//var MSIE = window.navigator.appVersion.indexOf("MSIE")>=0;
+		var MSIE	= window.navigator.userAgent.indexOf("MSIE") >= 0;
+		var OPERA	= window.navigator.userAgent.indexOf("Opera") >= 0;
+		var FIREFOX	= window.navigator.userAgent.indexOf("Firefox") >= 0;
+		var CHROME	= window.navigator.userAgent.indexOf("Chrome") >= 0;
+		var SAFARI	= window.navigator.userAgent.indexOf("Safari") >= 0 && !CHROME;
+		
+		var ADMIN_SPINNER = null;
+		
+		var GNR_NUMERIC				= 'El campo \"<TOK>\" debe ser numérico.';
+		
+		var LBL_CAN_UPDATE			= 'puede actualizar';
+		
+		var LBL_CLEAR_ONE_FILTER	= 'Eliminar filtro';
+		
+		//IE Fix
+		if (!window.location.origin) {
+			window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+		}
+		var WEBDAV_SERVER 			= window.location.origin + CONTEXT + '/WebDav/';
+		
+		var iv 				= '20256807630307142179839334642770';
+		var salt 			= '12915105254641757229163717948746';
+		var keySize 		= 128;
+		var iterationCount 	= 100;
+		var passPhrase		= 'APIA';
+		
+		
+		
+		var DATE_FORMAT = 'd/m/Y';
+		var HOUR_SEPARATOR = ':';
+		if	(HOUR_SEPARATOR == null || HOUR_SEPARATOR.length != 1){ HOUR_SEPARATOR = ":"; }
+		
+		var charThousSeparator	= '.';
+		var charDecimalSeparator = ',';
+		var addThousandSeparator = false;
+		var amountDecimalSeparator = '0';
+		var amountDecimalZeros = '0';
+		
+		/*
+		var charThousSeparator	= '.';
+		var charDecimalSeparator = ',';
+		var addThousandSeparator = false;
+		var amountDecimalSeparator = '0';
+		var amountDecimalZeros = '0';
+		var strDateFormat = "dd/MM/yyyy";
+		
+		
+		//var objNumRegExp 			=  /^-?\d{1,3}(,\d{3})*\.\d{1,3}$|^-?\d{1,3}(,\d{3})*$|^-?\d{1,}\.\d{1,3}$|^-?\d{1,}$/;
+		var objNumRegExp;
+		if(addThousandSeparator) {
+			objNumRegExp =  /^-?\d{1,3}(\.\d{3})*\,\d{0,0}$|^-?\d{1,3}(\.\d{3})*$/;
+		} else {
+			objNumRegExp =	/^-?\d{1,}\,\d{0,0}$|^-?\d{1,}$/;
+		}
+		*/
+		
+		var objNumRegExp = /^-?\d{1,},\d{1,6}$|^-?\d{1,}$/;
+		
+		var LBL_DAYS = ['Domingo', 
+		                'Lunes', 
+		                'Martes', 
+		                'Miércoles', 
+		                'Jueves', 
+		                'Viernes', 
+		                'Sábado'];
+		
+		var LBL_MONTHS = ['Enero', 
+		                'Febrero', 
+		                'Marzo', 
+		                'Abril', 
+		                'Mayo', 
+		                'Junio', 
+		                'Julio', 
+		                'Agosto', 
+		                'Setiembre', 
+		                'Octubre', 
+		                'Noviembre', 
+		                'Diciembre'];
+		
+		var PRIMARY_SEPARATOR_IN_BODY = false;
+		
+		if (MOBILE){
+			//CAM_13222 - En modo mobile se deshabilta acciones de history (back/forward)
+			disableHistoryActions();
+		}
+		var datePickersLoaded = false;		
+		window.addEvent('load', function() {
+			
+			if (MOBILE){ $(window.document.html).addClass("mobile-mode"); }
+			
+			document.addEvent('keydown', Generic.showSearch);
+			document.addEvent('keydown', Generic.preventBackNavigation);
+			
+			initTabs();
+			
+			//llama al init page de cada jsp... todos deben tener uno, aunque no se haga nada en el
+			if(window.initPage)
+				initPage();
+			else if(window.console && console.log)
+				console.log('initPage no definido en el frame actual');
+			
+			if(!datePickersLoaded){
+				//Setear datepicker
+				$$("input.datePicker").each(setAdmDatePicker);			
+			}
+		
+			
+			//Setear datepicker
+			$$("div.button").each(Generic.setButton);
+			
+			//Setear numeric
+			$$('input.numeric').each(Numeric.setNumeric);
+			
+			//Setear botones de grillas
+			$$("div.navButton").each(Generic.setAdmGridBtnWidth);
+			
+			$$('div.tabComponent').each(function(container) {
+				container.setStyle("padding-top", container.getPrevious().getHeight());
+			});
+			
+			window.addEvent("resize", function() {
+				$$('div.tabComponent').each(function(container) {
+					container.setStyle("padding-top", container.getPrevious().getHeight());
+				});
+			})
+			
+			
+				$(window.document.html).addClass("req-after");
+			
+			
+			var optionContainer = document.getElement('div.optionsContainer');
+			if(optionContainer) {
+				addEvent('resize', checkOptionsPositionStyle);
+				checkOptionsPositionStyle();
+			}
+			
+			
+			var tabs = $$('div.tab');
+			if(tabs)
+				tabs.set('tabIndex', '').addEvent('keypress', Generic.enterKeyToClickListener)
+			
+			var gridHeaders = $$('div.gridHeader');
+			if(gridHeaders && gridHeaders.length)
+				gridHeaders.each(function(header) {
+					header.getElements('input, select').addEvent('focus', HScroller.thFocusListener);
+				});
+			
+			document.body.addEvent('keydown', function(e) {
+				if(e.key == 'tab') {
+					document.body.removeClass('no-keyboard-focus');
+				}
+			}).addEvent('mousedown', function(e) {
+				document.body.addClass('no-keyboard-focus');
+			});
+			
+			var execBlocker = $('exec-blocker');
+			if(execBlocker) {
+				var fx = new Fx.Morph(execBlocker, {
+					duration: 100
+				});
+				fx.start({
+					opacity: 0
+				}).chain(function() {
+					execBlocker.destroy();
+				});
+			}
+			
+			if(parent && parent.tabContainer && parent.tabContainer.bodyMask && parent.tabContainer.bodyMask.hideMaskOpaque)
+				parent.tabContainer.bodyMask.hideMaskOpaque();
+			
+		});
+		
+		function checkOptionsPositionStyle() {
+			var optionContainer = document.getElement('div.optionsContainer');
+			if(optionContainer) {
+				if(optionContainer.getHeight() > $(document.body).getHeight())
+					optionContainer.setStyle('position', 'absolute');
+				else
+					optionContainer.setStyle('position', '');
+			}
+		}
+		
+		
+		window.addEvent('scroll', function(evt) {
+			document.getElementsByTagName('BODY')[0].setStyle('border','0px solid white');
+		});
+		
+	</script>
+			
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/tasks/task.js" ></script>
+			
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/synchronize-fields.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/masked-input.js"></script>
+			
+			<!-- JS Objects -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/form.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/field.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/input.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/select.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/area.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/button.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/check.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/editor.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/grid.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/hidden.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/href.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/image.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/label.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/multiple.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/password.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/radio.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/title.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/fileinput.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/tree.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/classes/fieldTypes/captcha.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/contextmenu.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/print.js"></script>
+			
+			<!-- WEBDAV JS Client -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/ITHitWebDav/ITHitWebDAVClient.js"></script>
+			
+			<!-- API JS -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/API/apiaFunctions.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/execution/scripts/API/apiaField.js"></script>
+			
+			<!-- documents -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/modals/documents.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/generic/documents.js"></script>
+			
+			<!-- modals  -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/modals/pools.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/modals/users.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/modals/calendarsView.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/modals/foldersDocuments.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/includes/foldersDisplay.js"></script>
+			
+		
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/includes/navButtons.js"></script>
+			
+			<!-- social -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/social/taskReadPanel.js"></script>			
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/social/socialShareMdl.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/social/socialReadChannelMdl.js"></script>
+			
+			<!-- DRAG AND DROP BEHAVIOUR -->
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/dragAndDrop/Form.MultipleFileInput.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/dragAndDrop/Form.Upload.js"></script>
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/js/dragAndDrop/Request.File.js"></script>
+			
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/scripts/tinymce/jscripts/tinymce_4.1.5/tinymce.min.js"></script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/scripts/tinymce/jscripts/tinymce_4.1.5/tinymce.custom.js"></script><script type="text/javascript">
+tinymce.init({
+	language: 'es',
+	
+    theme: "modern",
+    mode : "exact",
+	height : "350",
+	width : "600",
+    plugins: [
+		"advlist autolink lists charmap print preview hr spellchecker",
+		"searchreplace visualblocks code fullscreen",
+		"insertdatetime table contextmenu paste textcolor"
+    ],
+    toolbar1: "bold italic underline | custom_fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | spellchecker ",
+    templates: [
+        {title: 'Test template 1', content: 'Test 1'},
+        {title: 'Test template 2', content: 'Test 2'}
+    ],
+    setup: function(ed) {
+    	ed.on('blur', function(e) {
+			if(e.target.isDirty())
+					e.target.save();
+			
+			e.target.getElement().fireEvent('change');
+      	});
+    	
+    	addCustomFontSizeSelect(ed);
+    },
+    spellchecker_rpc_url: "/tramites-en-linea/TramitesEnLinea/spellchecker/jmyspell-spellchecker",
+    spellchecker_language: "es_UY",
+    spellchecker_languages: 'Inglés=en_US,Español=es_UY,Portugués=pt_PT'
+});	
+</script>
+			
+			<script type="text/javascript">
+				var URL_REQUEST_AJAX = '/apia.execution.TaskAction.run';	
+				var CLOSE_ON_RETURN = false;			
+				
+				
+				var commentsMarked 	= false;
+				var currentTab 		= -1;
+				
+				var currentStep		= 1;
+				var stepQty 		= 2;
+				var CURRENT_TASK_NAME = "CONSULTA_NO_LLAME";
+				var CURRENT_PROCESS_NAME = "URSEC_CONSULTA_REGISTRO_NO_LLAME";
+				var ADDITIONAL_INFO_IN_TABLE_DATA = false;
+				
+				var signedOK = "false";
+				var MSG_REQ_SIGNATURE_FORM = "Existen formularios firmables que no fueron firmados";
+				
+				var TSK_TITLE = "CONSULTA_NO_LLAME";
+				var TAB_ID	= "1752698122905";
+				
+				var IN_MONITOR = false;
+				var IN_MONITOR_PROCESS = false;
+				var IN_MONITOR_TASK	   = false;
+				var EXTERNAL_ACCESS = "true";
+				var IS_MINISITE		= "false";
+				var onFinish 		= "1";
+				var onFinishURL		= "";
+				var URL_PRO_BUS_ENT_IDS = "&txtProId=1259&txtBusEntId=3756";
+				var BTN_FILE_UPLOAD_LBL = "Subir archivo";
+				var BTN_FILE_DOWNLOAD_LBL = "Descargar archivo";
+				var BTN_FILE_INFO_LBL = "Información";
+				var BTN_FILE_LOCK_LBL = "Bloquear/Desbloquear";
+				var BTN_FILE_ERASE_LBL = "Eliminar";
+				var BTN_FILE_SIGN_LBL = "Firmar archivo";
+				var BTN_FILE_VERIFY_LBL = "Verificar firma";
+				var BTN_FILE_TRADUC_LBL = "LBL_NOT_FOUND : lblTranslations";
+				var MSG_CONFIG_DELETE_DOCUMENT_FILE_INPUT        = '¿Desea eliminar el documento?';
+				var TIT_SING_MODAL_LBL = "Formularios a firmar";
+				var TIT_SING_MODAL_PREV_LBL = "Formularios para firmar de pasos anteriores";
+				var TIT_SING_DOCS_MODAL_LBL = "Documentos para firmar";
+				var DROP_FILES_HERE_LBL				= 'Coloque documentos aqu&#237;';
+				var BTN_FILE_DROP_LBL	= 'Coloque documentos aqu&#237;';
+				
+				var ERR_EXEC_BUS_CLASS = "Error en la clase de negocio <TOK1>, comuníquese con el administrador.";
+				var LBL_ERROR 		= "Error";
+				var MSG_VAL_NOT_FOUND 	= "No se encontró el valor.";
+				var ERR_EXEC_BINDING 	= "Ocurrió un error al realizar el binding de atributos.";
+				
+				var TIT_TRANSLTATION = "Traducción de contenidos";
+				
+				var MSG_DEL_FILE_TRANS = "Al eliminar un documento se perderán sus traducciones.¿Desea continuar?";
+				var TIT_DEL_FILE = "Eliminar documento";
+				
+				var LBL_OTHER_DOCS	= "Otros documentos";
+				
+				var LBL_FROM = "De";
+				var LBL_EDIT = 'Editar archivo';
+				
+				var LBL_LEAVE_DOCS_HERE = 'Coloque documentos aqu&#237;';
+				
+				var GLOBAL_PARAMS		= [
+						toBoolean('false'),	
+						toBoolean('false'),
+						toBoolean('false')
+				];
+				
+				var ENVIRONMENT_PARAMS	= [
+						false,
+						false,
+						false
+				];
+				
+				
+				/******************************** PROCESS **************************************/
+				var PRO_DEF_PARAMS 		= [
+						0,
+						0,
+						0,
+				];
+				
+				/*
+					VARIABLES DEL ARRAY:
+						1. OCULTAR PERMISOS
+						2. OCULTAR METADATA
+						3. COLAPSAR PERMISOS
+						4. COLAPSAR ESTRUCTURA DE DIRECTORIOS
+						5. COLAPSAR METADATOS
+						6. PERMITIR SELECCIONAR DOCUMENTOS DE MONITOR
+						7. ID DEL MONITOR
+						8. MOSTRAR ESTRUCTURA DE DIRECTORIOS
+						9. PERMITIR SELECCIONAR DOCUMENTOS DE UN DIRECTORIO
+				*/
+				var PRO_PARAMS_FOR_DOC_MODAL = [
+					false,
+					false,
+					false,
+					false,
+					false
+				];
+				
+				var ENV_PARAM_DOC_MON_ID 	= 0;
+				var ENT_DOC_MON_ID 			= 1;
+				var PRO_DOC_MON_ID			= 1;
+				
+				if (parseInt(PRO_DEF_PARAMS[0]) != 0) {
+					PRO_PARAMS_FOR_DOC_MODAL.push(parseInt(PRO_DEF_PARAMS[0]) == 1 
+							|| (parseInt(PRO_DEF_PARAMS[0]) == 2 && GLOBAL_PARAMS[0]) || (parseInt(PRO_DEF_PARAMS[0]) == 3 && ENVIRONMENT_PARAMS[0])); 
+					PRO_PARAMS_FOR_DOC_MODAL.push(parseInt(PRO_DEF_PARAMS[0]) == 1 ? PRO_DOC_MON_ID
+							: (parseInt(PRO_DEF_PARAMS[0]) == 2 && GLOBAL_PARAMS[0]) ? 1
+							: (parseInt(PRO_DEF_PARAMS[0]) == 3 && ENVIRONMENT_PARAMS[0]) ? ENV_PARAM_DOC_MON_ID : null);
+				} else {
+					PRO_PARAMS_FOR_DOC_MODAL.push(false);
+					PRO_PARAMS_FOR_DOC_MODAL.push(0);
+				}
+				
+				if (parseInt(PRO_DEF_PARAMS[1]) != 0) {
+					PRO_PARAMS_FOR_DOC_MODAL.push(parseInt(PRO_DEF_PARAMS[1]) == 1 
+							|| (parseInt(PRO_DEF_PARAMS[1]) == 2 && GLOBAL_PARAMS[2]) || (parseInt(PRO_DEF_PARAMS[1]) == 3 && ENVIRONMENT_PARAMS[2]));
+				} else PRO_PARAMS_FOR_DOC_MODAL.push(false);
+				
+				if (parseInt(PRO_DEF_PARAMS[2]) != 0) {
+					PRO_PARAMS_FOR_DOC_MODAL.push(parseInt(PRO_DEF_PARAMS[2]) == 1 
+							|| (parseInt(PRO_DEF_PARAMS[2]) == 2 && GLOBAL_PARAMS[1]) || (parseInt(PRO_DEF_PARAMS[2]) == 3 && ENVIRONMENT_PARAMS[1]));
+				} else PRO_PARAMS_FOR_DOC_MODAL.push(false);
+				
+				
+				/****************************** ENTITY **************************************/
+				var ENT_DEF_PARAMS 				= [
+						0,
+						0,
+						0,
+				];
+				
+				/*
+					VARIABLES DEL ARRAY:
+						1. OCULTAR PERMISOS
+						2. OCULTAR METADATA
+						3. COLAPSAR PERMISOS
+						4. COLAPSAR ESTRUCTURA DE DIRECTORIOS
+						5. COLAPSAR METADATOS
+						6. PERMITIR SELECCIONAR DOCUMENTOS DE MONITOR
+						7. ID DEL MONITOR
+						8. MOSTRAR ESTRUCTURA DE DIRECTORIOS
+						9. PERMITIR SELECCIONAR DOCUMENTOS DE UN DIRECTORIO
+				*/
+				var BUS_ENT_PARAMS_FOR_DOC_MODAL = [
+					false,
+					false,
+					false,
+					false,
+					false
+				];
+				
+				if (parseInt(ENT_DEF_PARAMS[0]) != 0) {
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(parseInt(ENT_DEF_PARAMS[0]) == 1 
+							|| (parseInt(ENT_DEF_PARAMS[0]) == 2 && GLOBAL_PARAMS[0]) || (parseInt(ENT_DEF_PARAMS[0]) == 3 && ENVIRONMENT_PARAMS[0])); 
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(parseInt(ENT_DEF_PARAMS[0]) == 1 ? ENT_DOC_MON_ID
+							: (parseInt(ENT_DEF_PARAMS[0]) == 2 && GLOBAL_PARAMS[0]) ? 1
+							: (parseInt(ENT_DEF_PARAMS[0]) == 3 && ENVIRONMENT_PARAMS[0]) ? ENV_PARAM_DOC_MON_ID : null);
+				} else {
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(false);
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(0);
+				}
+				
+				if (parseInt(ENT_DEF_PARAMS[1]) != 0) {
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(parseInt(ENT_DEF_PARAMS[1]) == 1 
+							|| (parseInt(ENT_DEF_PARAMS[1]) == 2 && GLOBAL_PARAMS[2]) || (parseInt(ENT_DEF_PARAMS[1]) == 3 && ENVIRONMENT_PARAMS[2]));
+				} else BUS_ENT_PARAMS_FOR_DOC_MODAL.push(false);
+				
+				if (parseInt(ENT_DEF_PARAMS[2]) != 0) {
+					BUS_ENT_PARAMS_FOR_DOC_MODAL.push(parseInt(ENT_DEF_PARAMS[2]) == 1 
+							|| (parseInt(ENT_DEF_PARAMS[2]) == 2 && GLOBAL_PARAMS[1]) || (parseInt(ENT_DEF_PARAMS[2]) == 3 && ENVIRONMENT_PARAMS[1]));
+				} else BUS_ENT_PARAMS_FOR_DOC_MODAL.push(false);
+				
+				
+				
+				
+				var ON_CLOSE_TASK_MSG = 'Está por perder las modificaciones realizadas. ¿Desea continuar?';
+				
+				
+				
+					var isMonitor = false;
+				
+				
+				
+					var fromAlterProcess = false;
+				
+				
+				
+					var fromCancelProcess = false;
+				
+				
+				//Social
+				var APIA_SOCIAL_ACTIVE			= toBoolean('false');
+				
+				
+				var idNumWrite = false;
+				
+				var currentContentTab = null;
+				
+				var MSG_NO_GUA = "Tarea no guardada. ¿Continuar?";
+				
+				function customInitPage() {
+					IN_EXECUTION = true;
+					docTypePerEntId = 3756;
+					docTypePerProId = 1259;
+				}
+								
+				<!-- Agendas  -->
+				
+				var TSK_DAY_MON = 'Lun.';
+				var TSK_DAY_TUE = 'Mar.';
+				var TSK_DAY_WED = 'Mi&#233;.';
+				var TSK_DAY_THU = 'Jue.';
+				var TSK_DAY_FRI = 'Vie.';
+				var TSK_DAY_SAT = 'S&#225;b.';
+				var TSK_DAY_SUN = 'Dom.';
+				
+				var TSK_MONT_JAN = 'Enero';
+				var TSK_MONT_FEB = 'Febrero';
+				var TSK_MONT_MAR = 'Marzo';
+				var TSK_MONT_APR = 'Abril';
+				var TSK_MONT_MAY = 'Mayo';
+				var TSK_MONT_JUN = 'Junio';
+				var TSK_MONT_JUL = 'Julio';
+				var TSK_MONT_AUG = 'Agosto';
+				var TSK_MONT_SEP = 'Setiembre';
+				var TSK_MONT_OCT = 'Octubre';
+				var TSK_MONT_NOV = 'Noviembre';
+				var TSK_MONT_DEC = 'Diciembre';
+				
+				var LBL_TODAY = 'Hoy';
+				var LBL_SCHED_FORM_TITLE = 'Agenda';
+				
+				var LBL_SCHED_OF = 'de';
+				var LBL_SCHED_WEEK_NOT_CONFIGURED = 'No es posible agendar tareas en la semana seleccionada.';
+				
+				var LBL_TIT_SAVE_TASK = 'Guardar tarea';
+				var LBL_MSG_NOT_SAVE_SCHED = 'No se guardar&#225; la fecha seleccionada para la agenda. ¿Desea continuar?';
+				
+				var WEBDAV_PROTOCOL_INSTALLER = ITHit.WebDAV.Client.DocManager.GetInstallFileName();
+				var MSG_NO_DOC_EDIT_PROTOCOL	= 'No se detectó la instalación del protocolo necesario para la edición de documentos.<br/>Es necesario descargar e instalar el protocolo para editar documentos: <a href="plugins/webdav/'+WEBDAV_PROTOCOL_INSTALLER+'" download>Descargar instalador</a>.';
+				
+			</script>
+			<link href="/tramites-en-linea/TramitesEnLinea/css/base/modules/schedulerExec.css" rel="stylesheet" type="text/css" >
+			<script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/includes/tskSchedulerExecution.js"></script>
+			
+			
+<script></script>
+<script>
+
+var saving = false;
+function frmOnloadE() {
+}
+function submitFormsData_E() {
+if(saving){return true;}var boolContinue = true;
+return !!(boolContinue);
+}
+function beforePrintFormsData_E() {
+var boolContinue = true;
+return !!(boolContinue);
+}
+function afterPrintFormsData_E() {
+var boolContinue = true;
+return !!(boolContinue);
+}
+function getRequiredToSignFields_E() {
+return true;}
+</script>
+
+<script>
+
+var saving = false;
+function frmOnloadP() {
+}
+function submitFormsData_P() {
+if(saving){return true;}var boolContinue = true;
+return !!(boolContinue);
+}
+function beforePrintFormsData_P() {
+var boolContinue = true;
+return !!(boolContinue);
+}
+function afterPrintFormsData_P() {
+var boolContinue = true;
+return !!(boolContinue);
+}
+function getRequiredToSignFields_P() {
+return true;}
+</script>
+
+
+			
+			
+			
+			
+		
+
+
+<link href="/tramites-en-linea/TramitesEnLinea/css/base/portalForm.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/anim.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/custom.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/fileInput.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/formToMsg.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/modal.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/paddings.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/responsive.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/stylePortal.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/tablas.css"  rel="stylesheet" type="text/css" />
+<link href="/tramites-en-linea/TramitesEnLinea/css/estilo_agesic/portal_form/formToMsg-URSEC.css"  rel="stylesheet" type="text/css" />
+
+
+	
+<script type="text/javascript"	src="/tramites-en-linea/TramitesEnLinea/page/templates/portalForm.js"></script>
+
+<script type="text/javascript">
+	
+var DOC_LANGS		= {};
+	
+</script>
+</head>
+<body id="paginaPortal">
+
+	<div id="div-nav-error"></div>
+	<div class="body" id="bodyDiv">
+	<div id="titleContainer">
+		<div class="titleContainer">
+		
+			<span class="titImage">
+			
+				<img title="Prioridad normal" alt="Prioridad normal" src="/tramites-en-linea/TramitesEnLinea/css/base/img/priority2.gif" >
+			
+			</span>
+			<span class='proTitle'>Consulta de números en el registro de No Llame</span><span class='execTitleSeparator'>&gt;</span><span class='taskTitle'>CONSULTA_NO_LLAME</span>
+			
+		
+		</div>
+	</div>
+	<div id="progressStepBar" class="pBarContainer" tabindex="-1"></div>
+		<form id="frmData" action="dummy" method="post">
+			<input type='submit' style='display:none' value='submit' disabled>
+			<div class="dataContainer">
+				<div class='tabComponent' id="tabComponent">
+
+					<div class="aTabHeader">
+						
+					</div>
+					<div class="fncPanel info" style='display: none'>
+
+						<div class="title">
+							<span class="title">
+			<span class="titImage">
+			
+				<img title="Prioridad normal" alt="Prioridad normal" src="/tramites-en-linea/TramitesEnLinea/css/base/img/priority2.gif" >
+			
+			</span>
+			<span class='proTitle'>Consulta de números en el registro de No Llame</span><span class='execTitleSeparator'>&gt;</span><span class='taskTitle'>CONSULTA_NO_LLAME</span>
+			
+		</span>
+						</div>
+
+						<div class="content divFncDescription" style="position: relative;">
+							<div class="fncDescriptionImgSection">
+								
+			
+			<div class="fncDescriptionImgUsers" style="background-image: url('css/base/img/functionalities/Tareas.gif');"></div>
+			
+		
+							</div>
+							<div class="descInfo">
+								<div class="title" style="font-weight: bold;"></div>
+								<div class="fncDescriptionText" id="fncDescriptionText"></div>
+							</div>
+							<div class="clear"></div>
+						</div>
+
+						
+			
+		
+					</div>
+
+					<div class='aTab'>
+						<div class='tab' style="display: none">
+							Forms. tarea
+						</div>
+						<div class='contentTab'>
+							
+			<div class="tabContent">
+			<div id="E_6619" class="formContainer" data-xml="<apiaForm formName='CONSULTA_NO_LLAME' formTitle='Consulta del registro no llame' id='6619' cols='4' rows='6' properties='{}' prpFrmClosed='false' signableForm='false' requiredSignableForm='false' markedToSign='false' readOnly='false' ><field fieldType='label'  id='7'  x='0' y='0'   rows='2'  valueType='null' properties='{name:&quot;&quot;, rowspan:&quot;2&quot;, value:&quot;El formato del n&amp;#250;mero son los 8 n&amp;#250;mero d&amp;#237;gitos. Para el caso de los celulares no debe incluir el 0 a la izquierda (Ej. 099123456 -&amp;#62; 99123456)&quot;, alignment:&quot;0&quot;, fontColor:&quot;#090A63&quot;, tooltip:&quot;&quot;}'></field><field fieldType='input'  attLabel='N&amp;#250;mero de Tel&amp;#233;fono'  id='8'  x='0' y='2'   attId='11808'  attName='URSEC_TELEFONO_URUGUAY'  length='8'  valueType='S'  value=''  regExp='^[2,4,9][0-9]{7}' properties='{name:&quot;URSEC_TELEFONO_URUGUAY&quot;, regExpMessage:&quot;Debe ingresar un n&amp;#250;mero de 8 d&amp;#237;gitos que comience con 2, 4 o 9&quot;, tooltip:&quot;Debe ingresar un número de 8 dígitos y debe empezar con 2, 4 o 9&quot;}'></field><field fieldType='captcha'  attLabel='C&amp;#243;digo de verificaci&amp;#243;n'  id='6'  x='0' y='3'   rows='2'  valueType='null'  value='' properties='{name:&quot;&quot;, rowspan:&quot;2&quot;, tooltip:&quot;&quot;}'></field></apiaForm>"></div>
+
+
+			<label for="hidFocusE">&nbsp;</label>
+			<input id="hidFocusE" tabindex="-1" style="height: 0px; width: 0px; border:none;">
+			</div>
+		
+							
+			<div class="tabContent">
+			
+
+			<label for="hidFocusP">&nbsp;</label>
+			<input id="hidFocusP" tabindex="-1" style="height: 0px; width: 0px; border:none;">
+			</div>
+		
+						</div>
+					</div>
+					<div class='bottom fncPanel' id="btnPanel">
+						<div class="float-right-buttons">
+							
+
+			<div id="divAdminActEdit" class="fncPanel buttons">
+				<div class="title">Acciones</div>
+				<div class="content">
+				
+				
+					
+					
+					<div id="btnNext" class="button suggestedAction"  title="Siguiente">Continuar al paso siguiente >></div>					
+					
+					
+					
+					
+								
+					
+					
+					
+					
+					
+					
+					
+					
+				</div>
+			</div>
+			
+			
+			<div id="divAdminActSteps" class="fncPanel buttons clear">
+				<div class="title">Pasos</div>
+				<div id="stepsGraph" class="stepsGraph"></div>
+			</div>
+			
+			
+		
+						</div>
+					</div>
+				
+				</div>
+
+			</div>
+
+		</form>
+	</div>
+	<div style="display: none" id="divDragDropForm"></div>
+
+	<script type="text/javascript">
+	var DEFAULT_DOC_TYPE_ID 			= '1';
+	var MSG_METADATA_TITLE_UNIQUE 		= 'Los t&#237;tulos de metadatos deben ser &#250;nicos.';
+	var MSG_NO_UP_DOC_TYPE_DIS 			= 'No se puede actualizar, el tipo de documento est&#225; deshabilitado.';
+	var MSG_NO_EXI_DOC_TYPE_ENA_AND_PER = 'No existen tipos de documentos habilitados y permitidos. Comun&#237;quese con un administrador.';
+	var PRIMARY_SEPARATOR				= new Element('div').set('html', '&#183;').get('text');
+	var AUXILIAR_SEPARATOR				= new Element('div').set('html', '~').get('text');
+	var DOCUMENT_EVERYONE_PERMISSION	= "true";
+	var DOCUMENT_OWNER_PRIVILEGES		= "false";
+	var GLOBAL_PARAM_ALLOW_MON_DOCUMENT	= toBoolean("false");
+	var GLOBAL_PARAM_ALLOW_FLD_STRC_DOC	= toBoolean("false");
+	var GLOBAL_PARAM_ALLOW_FLD_STRC_VW	= toBoolean("false");
+	var ENV_PARAM_ALLOW_MON_DOCUMENT	= false;
+	var ENV_PARAM_DOC_MON_ID			= 0;
+	var ENV_PARAM_ALLOW_FLD_STRC_DOC	= false;
+	var ENV_PARAM_ALLOW_FLD_STRC_VW		= false;
+
+	var LBL_ACCEPTED_DC_TYPE			= 'Extensiones permitidas';
+	var LBL_NOT_ACCEP_DC_TYPE			= 'Extensiones no permitidas';
+	var MSG_ALL_DC_TYPE_ACCEPTED		= 'Todas las extensiones est&#225;n permitidas';
+	var MSG_NO_ARE_FORBIDDEN_DC_TYPES	= 'No existen ninguna extensi&#243;n no permitida';
+	var LBL_MAX_SIZE					= 'Tama&#241;o m&#225;ximo';
+	var SEL_ONLY_ONE_DOC				= 'Se puede seleccionar solo un documento.';
+	var LBL_DROP_FILE_ERR				= 'Los documentos colocados no se han procesado correctamente.';
+	var MSG_LAST_MOD_DATE 				= 'Fecha de últ. modificación';
+	var MSG_NO_SELECT_FOLDER			= 'No incluir en directorio';
+	var LBL_DROP_FILE_DELETED			= 'Los siguientes documentos no poseen una extensi&#243;n admitida o superan el tama&#241;o m&#225;ximo permitido';
+	var LBL_DROP_FILE_REPEATED			= 'Los siguientes documentos ya han sido colocados';
+	var LBL_DROP_FILE_NAMES_NOT_MATCH	= 'El archivo que intenta subir tiene un nombre diferente al actual.';
+	
+	var NEW_TAB_ID 						= new Date().getTime();
+	var NEW_TOKEN_ID 					= "&tokenId=1752698122346";
+	var CURRENT_USR_ID 					= 'externo';
+	var CURRENT_USR_NAME				= 'Usuario an&#243;nimo';
+	var USE_CURRENT_USR_PERMS			= false;
+	
+	
+</script><script type="text/javascript" src="/tramites-en-linea/TramitesEnLinea/page/includes/droppedDocuments.js"></script><div id="mdlDocumentContainer" class="mdlContainer hiddenModal documentMdl" tabIndex="0"><div class="mdlHeader">Documentos</div><iframe title="uploadIframe" style="display:none;" id="documentIframeUpload" name="documentIframeUpload"></iframe><form id="frmModalDocumentUpload" target="documentIframeUpload" enctype="multipart/form-data" method="post"><button type="submit" aria-label="submit" id="btnDocumentSubmitIfr" style="display: none;"></button><div class="mdlBody"><div class="leftSectDocMdl" id="leftSectDocMdl"><table aria-label="Documentos modal left" style="width:99%;"><!--   title="Documentos">--><thead><tr><th id="mdlDocsTableCol1"></th><th id="mdlDocsTableCol2"></th><th id="mdlDocsTableCol3"></th></tr></thead><tbody id="leftBodyTable"><tr><td headers="mdlDocsTableCol1" class="text" style="width: 30%;"><label for="cmbDocType">Tipo de documento:&nbsp;</label></td><td headers="mdlDocsTableCol2" class="content" colspan="2"><select title="Tipo de documento" id="cmbDocType" name="cmbDocType" style="width: 90% !important;" class="validate['required']"></select><div class="imgInfoDocType" id="mdlInfoDocType"></div><span id="spanDocType" style="display: none;"></span></td></tr><!-- nuevo documento --><tr class="btnSelDocToHide"><td headers="mdlDocsTableCol1" class="text"><label for="documentModalDocFile">Documento:</label></td><td headers="mdlDocsTableCol2" class="content fileMdlContainer" style="width: 37%;padding: 0px !important;height: 0px;vertical-align: middle;"><div class="modalOptionsContainer" id="mdlDocumentAddNewDc"><span class="option optionAdd mdlDocOption" tabIndex="0">Nuevo documento</span></div><input type="file" name="docFile" id="documentModalDocFile" title="Nuevo documento" class="validate['required']"></td><!-- drag and drop --><td headers="mdlDocsTableCol3" class="content" rowspan="3"><div class="modalOptionsContainer"><span class="option optionAdd dropIcon"  id="mdlDropArea" tabIndex="0" style="width:89%; text-align: center; display: none; height: 54px;"></span></div></td></tr><!-- default document monitor --><tr class="btnSelDocToHide" style="display: none"><td headers="mdlDocsTableCol1" class="text"></td><td headers="mdlDocsTableCol2"><div class="modalOptionsContainer" id="btnOpenMonDoc"><span class="option optionAdd mdlDocOption" tabIndex="0">Monitor de documentos</span></div></td></tr><!-- custom document monitor --><tr class="btnSelDocToHide" style="display: none"><td headers="mdlDocsTableCol1" class="text"></td><td headers="mdlDocsTableCol2"><div class="modalOptionsContainer" id="btnOpenCusMonDoc"><span class="option optionAdd mdlDocOption"  tabIndex="0">Monitor de documentos</span></div></td></tr><!-- seleccionar documento desde carpeta --><tr class="btnSelDocToHide" style="display: none"><td headers="mdlDocsTableCol1" class="text"></td><td headers="mdlDocsTableCol2"><div class="modalOptionsContainer" id="btnOpenDocFldMdl"><span class="option optionAdd mdlDocOption" tabIndex="0">Estructura de directorios</span></div></td></tr><tr><td></td><td headers="mdlDocsTableCol1" colspan="2"><div class="progressBarContainer" id="documentProgressBarContainer" style="width: 100%;"><div class="progressBar" id="documentProgressBar"></div></div><div id="documentProgressMessages"></div></td></tr><tr><td headers="mdlDocsTableCol1" class="text"><label for="documentModalDocDesc">Descripci&#243;n:</label></td><td headers="mdlDocsTableCol2" class="content" colspan="2"><textarea title="Descripci&#243;n" name="docDesc" id="documentModalDocDesc" style="width: 99%; resize: none;" maxlength="255"></textarea></td></tr><tr><td headers="mdlDocsTableCol1" class="text"><label for="docExpDate">Fecha de expiraci&#243;n:</label></td><td headers="mdlDocsTableCol2" class="content" colspan="2"><input type="text" name="docExpDate" id="docExpDate" class="datePickerCustom"></td></tr></tbody></table><br><div class="fieldGroup" id="documentInfoContainer" style="display: none; max-height: 170px;"><!-- 						<div id="documentInfoContainer" style="display:none;"> --><div class="collapseMdlDocSection"></div><div class="title">Documentos agregados</div><div class="modalOptionsContainer scrollContainer" id="docsNamesContainer" style="min-height: 42px; max-height: 165px; width: 100%; overflow:auto;"></div></div><div class="fieldGroup" id="permission"><div class="collapseMdlDocSection"></div><div class="title">Permisos</div><table title="permissionTable"><thead><tr><th id="mdlRightDocsTableCol1" style="width:30%"></th><th id="mdlRightDocsTableCol2" style="width:70%"></th></tr></thead><tbody><tr id="permissions"><td headers="mdlRightDocsTableCol1" class="text" style="width: 30%">Permisos de acceso al documento:</td><td headers="mdlRightDocsTableCol2" class="content" colspan="2"><div class="modalOptionsContainer scrollContainer" id="mdlDocumentPoolContainter"><span class="option"><label for="selDocAllPoolPerm">Todos:</label><select name="docAllowAllType" id="selDocAllPoolPerm" title="Permisos de acceso al documento"><option value="M">Modificar</option><option value="R">Leer</option><option value="">Acceso denegado</option></select></span><div id="scrollOptions" class="scrollContainer" style="max-height:105px;overflow:auto"></div><hr id="mdlDocumentPoolContainterDivider" style="clear: both;"><span class="option optionAdd" id="mdlDocumentAddPool" tabIndex="0">Agregar grupo</span><span class="option optionAdd" id="mdlDocumentAddUser" tabIndex="0">Agregar usuario</span></div></td></tr></tbody></table></div><div class="fieldGroup" id="folders" style="display: none;"><div class="collapseMdlDocSection"></div><div class="title">Directorios</div><!-- 						<div id="folders" class="foldersStruct scrollContainer" style="max-height: 135px;"> --><div class="foldersStruct scrollContainer" style="max-height: 135px;"><ul id="foldersStruct"></ul></div></div><!-- METADATA --><div class="fieldGroup" id="metadata"><div class="collapseMdlDocSection"></div><div class="title">Metadatos</div><div class="gridContainer" style="margin: 0px;" id="gridMetadata"><div class="gridHeader" style="width: 100%;"><table title="Metadatos header"><thead><tr class="header"><th id="tableMetadataCol1Head" title="El t&#237;tulo que ser&#225; visible para el usuario" style="width: 50%"><div style="width: 100%">T&#237;tulo</div></th><th id="tableMetadataCol2Head" title="Valor" style="width: 50%"><div style="width: 100%">Valor</div></th></tr></thead><tbody><tr><td headers="tableMetadataCol1Head"></td><td headers="tableMetadataCol2Head"></td></tr></tbody></table></div><div class="gridBody" style="height: 135px; overflow: hidden !important;"><table title="Metadatos"><thead><tr><th id="tableMetadataCol1"></th><th id="tableMetadataCol2"></th></tr></thead><tbody class="tableData" id="tableMetadata"><tr><td headers="tableMetadataCol1"></td><td headers="tableMetadataCol2"></td></tr></tbody></table></div><div class="gridFooter listActionButtons" style="margin-top: 0px;"><div class="listAddDel" id="buttonsMetadata" ><div class="actSeparator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="btnAdd navButton" id="btnAddMeta" style="margin-top: 5px;">Agregar</div><div class="actSeparator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="btnDelete navButton" id="btnDeleteMeta" style="margin-top: 5px;">Eliminar</div></div></div></div></div><br></div></div><div class="mdlFooter"><div class="close" id="btnCloseDocumentModal" tabIndex="0">Cerrar</div><div class="modalButton" id="btnConfirmDocumentModal" tabIndex="0">Confirmar</div></div></form></div><!-- modal de informacion de documentos --><div id="mdlDocumentInfo" class="mdlDocContainer mdlContainer hiddenModal"><div class="mdlHeader">Informaci&#243;n</div><div class="mdlBody"><!-- GENERAL INFO --><table class="generalInfo" title="Informaci&#243;n"><tbody ><tr><td class="text">Tipo de documento:&nbsp;</td><td class="content"><span id="docTypeLabel"></span></td></tr><tr><td class="text">Nombre:&nbsp;</td><td class="content largeText"><span id="lblNom"></span></td></tr><tr><td class="text">Descripci&#243;n:&nbsp;</td><td class="content largeText"><span id="docDesc"></span></td></tr><tr><td class="text">Fecha de expiraci&#243;n:&nbsp;</td><td class="content"><span id="docExpDateInfo"></span></td></tr><tr><td class="text">Enlace de descarga:&nbsp;</td><td class="content largeText"><span id="docDwn" style="width:100%;"></span></td></tr><tr id="permissionInfo"><td class="text">Permisos de acceso al documento:</td><td class="content"><div class="modalOptionsContainer" id="mdlDocumentPoolContainterInfo"><span class="option"><label for="selDocAllPoolPermInfo">Todos:</label><select title="Permisos de acceso al documento" name="docAllowAllType" id="selDocAllPoolPermInfo" class="readonly" disabled><option value="M" selected>Modificar</option><option value="R">Leer</option><option value="">Acceso denegado</option></select></span><div id="scrollOptionsInfo" style="max-height:105px;overflow:auto"></div><br><hr id="mdlDocumentPoolContainterDividerInfo" style="clear: both;display:none;"></div></td></tr></tbody></table><!-- HISTORY --><table class="history" title="Versiones del documento"><thead><tr><td id="docHistCol1">Versi&#243;n</td><td id="docHistCol2">Usuario</td><td id="docHistCol3">Fecha</td></tr></thead><tbody id="tblDocHistory"><!-- 					<tr style="Display : none"> --><!-- 						<td headers="docHistCol1"></td> --><!-- 						<td headers="docHistCol2"></td> --><!-- 						<td headers="docHistCol3"></td> --><!-- 					</tr> --></tbody></table></div><br><br><!-- METADATA --><div class="fieldGroup" id="metadataInfo"><div class="gridMetadataTitle">Metadatos</div><div class="gridContainer" style="margin: 0px;" id="gridMetadataInfo"><div class="gridHeader"><table title="Metadatos info header"><thead><tr class="header"><th id="MetadatosInfoHeader1" title="El t&#237;tulo que ser&#225; visible para el usuario" style="width: 50%"><div style="width: 100%">T&#237;tulo</div></th><th id="MetadatosInfoHeader2" title="Valor" style="width: 50%"><div style="width: 100%">Valor</div></th></tr></thead><tbody><tr style="display: none"><th headers="MetadatosInfoHeader1"></th><th headers="MetadatosInfoHeader2"></th></tr></tbody></table></div><div class="gridBody" style="height: 135px"><table title="Metadatos Info body"><thead><tr><th id="MetadatosInfoBody1" ></th><th id="MetadatosInfoBody2" ></th></tr></thead><tbody class="tableData" id="tableMetadataInfo"><tr style="display: none"><th headers="MetadatosInfoBody1"></th><th headers="MetadatosInfoBody2"></th></tr></tbody></table></div><div class="gridFooter listActionButtons"></div></div></div><div class="mdlFooter"><div class="close" id="btnCloseDocumentInfo">Cerrar</div></div></div><div class="" id="mdlTmpDivDocInfo"></div><div id="mdlPoolContainer" class="mdlContainer hiddenModal" tabIndex="0"><div class="mdlHeader">Grupos</div><div class="mdlBody"><div class="gridHeader gridHeaderModal"><!-- Cabezal y filtros --><table aria-label="Grupos modal head" title="Grupos"><thead><tr id="poolsTrOrderBy" class="header"><th id="orderByNamePoolMdl" class="allowSort sort" data-sortBy="0" title="Nombre"><div style="width:180px"><label for="nameFilterPoolMdl">Nombre</label></div></th><th id="orderByDescPoolMdl" class="allowSort sort" data-sortBy="1" title="E-mail"><div style="width:180px"><label for="descFilterPoolMdl">Descripci&#243;n</label></div></th></tr><tr class="filter"><th headers="orderByNamePoolMdl"><input title="Nombre" id="nameFilterPoolMdl" type="text" value="" maxlength="255"></th><th headers="orderByDescPoolMdl"><input title="Descripci&#243;n" id="descFilterPoolMdl" type="text" value="" maxlength="255"></th></tr></thead></table></div><div class="gridBody gridBodyModal"><!-- Cuerpo de la tabla --><table aria-label="Grupos modal body" title="Grupos"><thead><tr><th id="GruposModaBodyCol1" style="width:180px"></th><th id="GruposModaBodyCol2" style="width:180px"></th></tr></thead><tbody class="tableData" id="tableDataPool"><tr style="display: none;"><td headers="GruposModaBodyCol2"></td><td headers="GruposModaBodyCol2"></td></tr></tbody></table></div><div class="gridFooter"><script type="text/javascript">
+	var MUST_FILTER = 'Se debe configurar alg&#250;n valor de filtrado para realizar la consulta';
+</script><div class="navButtons"><div class="pGroup"><div tabIndex="0" id="navFirstPool" class="pButton btnFirst"></div><div tabIndex="0" id="navPrevPool" class="pButton btnPrev"></div></div><div class="pGroup" id="navigatorPool"><label for="navBarCurrentPagePool">&nbsp;</label><input title="P&#225;gina" id="navBarCurrentPagePool" type="text" size=2 value=0 class="navBarCurrentPage">De<span id="navBarPageCountPool" class="navBarPageCount">0</span></div><div class="pGroup"><div tabIndex="0" id="navNextPool" class="pButton btnNext"></div><div tabIndex="0" id="navLastPool" class="pButton btnLast"></div></div><div class="pGroup"><div tabIndex="0" id="navRefreshPool" class="pButton btnRefresh"></div></div></div><div class="navButtonsOptions"><div class="navButton" tabIndex="0" id="closeModalPool" style="width: 40px">Cerrar</div><div class="navButton navButtonRemoveFilters" tabIndex="0" id="clearFiltersPool">Eliminar filtros</div><div class="navButton" tabIndex="0" id="confirmModalPool" style="width: 60px">Confirmar</div></div></div></div></div><div id="mdlUsersContainer" class="mdlContainer hiddenModal" tabIndex="0"><div class="mdlHeader">Usuarios</div><div class="mdlBody"><div class="gridHeader gridHeaderModal"><!-- Cabezal y filtros --><table aria-label="Usuarios modal head" title="Usuarios"><thead><tr id="usersTrOrderBy" class="header"><th id="orderByLoginUsrMdl" class="allowSort sort" data-sortBy="0" title="Usuario"><div style="width: 100px"><label for="loginFilterUsrMdl">Usuario</label></div></th><th id="orderByNameUsrMdl" class="allowSort sort" data-sortBy="1" title="Nombre"><div style="width: 150px"><label for="nameFilterUsrMdl">Nombre</label></div></th><th id="orderByEmailUsrMdl" class="allowSort sort" data-sortBy="2" title="E-mail"><div style="width: 150px"><label for="emailFilterUsrMdl">E-mail</label></div></th></tr><tr class="filter"><th title="Usuario"><div style="width: 100px"><input id="loginFilterUsrMdl" type="text" value="" maxlength="255" title="Usuario"></div></th><th title="Nombre"><div style="width: 150px"><input id="nameFilterUsrMdl" type="text" value="" maxlength="255" title="Nombre"></div></th><th title="E-mail"><div style="width: 150px"><input id="emailFilterUsrMdl" type="text" value="" maxlength="255" title="E-mail"></div></th></tr></thead><tbody><tr style="display: none"><td headers="orderByLoginUsrMdl"></td><td headers="orderByNameUsrMdl"></td><td headers="orderByEmailUsrMdl"></td></tr></tbody></table></div><div class="gridBody gridBodyModal"><!-- Cuerpo de la tabla --><table aria-label="Usuarios modal body" title="Usuarios"><thead><tr><th id="orderByLoginUsrMdlBody" style="width:100px;"></th><th id="orderByNameUsrMdlBody" style="width:150px;"></th><th id="orderByEmailUsrMdlBody" style="width:150px;"></th></tr></thead><tbody class="tableData" id="tableDataUser"><tr style="display: none"><td headers="orderByLoginUsrMdlBody"></td><td headers="orderByNameUsrMdlBody"></td><td headers="orderByEmailUsrMdlBody"></td></tr></tbody></table></div><div class="gridFooter"><script type="text/javascript">
+	var MUST_FILTER = 'Se debe configurar alg&#250;n valor de filtrado para realizar la consulta';
+</script><div class="navButtons"><div class="pGroup"><div tabIndex="0" id="navFirstUser" class="pButton btnFirst"></div><div tabIndex="0" id="navPrevUser" class="pButton btnPrev"></div></div><div class="pGroup" id="navigatorUser"><label for="navBarCurrentPageUser">&nbsp;</label><input title="P&#225;gina" id="navBarCurrentPageUser" type="text" size=2 value=0 class="navBarCurrentPage">De<span id="navBarPageCountUser" class="navBarPageCount">0</span></div><div class="pGroup"><div tabIndex="0" id="navNextUser" class="pButton btnNext"></div><div tabIndex="0" id="navLastUser" class="pButton btnLast"></div></div><div class="pGroup"><div tabIndex="0" id="navRefreshUser" class="pButton btnRefresh"></div></div></div><div class="navButtonsOptions"><div class="navButton" tabIndex="0" id="closeModalUser" style="width: 40px">Cerrar</div><div class="navButton navButtonRemoveFilters" tabIndex="0" id="clearFiltersUser">Eliminar filtros</div><div class="navButton" tabIndex="0" id="confirmModalUser" style="width: 60px">Confirmar</div></div></div></div></div><script type="text/javascript">
+		var URL_REQUEST_AJAX_DOCS_FOLDERS_TREE 	= '/apia.modals.FoldersAction.run';	
+		var LOAD_MORE_DOCUMENTS					= 'Ver m&#225;s elementos';
+	</script><div id="mdlDcsFldsTreeContainer" class="mdlContainer hiddenModal"><div class="mdlHeader">Directorios</div><div class="mdlBody" id="mdlDcsFldTreeBody"><div class="gridBody gridBodyModal"><div class="modalOptionsContainer" style="height: 350px; width: 480px;"><div class="forceMaxHeight" style="height: 300px; overflow: auto;"><ul id="dcsFldsTreeMdl" class="fncContainer modal"></ul></div></div></div></div><div class="mdlFooter"><div class="close" id="btnCloseTreeDcsFldMdl">Cerrar</div><div class="modalButton" id="btnConfTreeDcsFldMdl" title="Confirmar">Confirmar</div></div></div>
+
+	<script type="text/javascript">
+	var URL_REQUEST_AJAX_CALENDAR = '/apia.modals.CalendarViewAction.run';
+	var SUNDAY 		= 'Domingo';
+	var MONDAY 		= 'Lunes';
+	var TUESDAY 	= 'Martes';
+	var WEDNESDAY 	= 'Mi&#233;rcoles';
+	var THURSDAY 	= 'Jueves';
+	var FRIDAY 		= 'Viernes';
+	var SATURDAY 	= 'S&#225;bado';
+	var LBL_A		= 'A';
+	var LBL_ALL_DAY	= 'Todo el d&#237;a';
+</script><div id="mdlCalendarViewContainer" class="mdlContainer hiddenModal"><div class="mdlHeader">Calendario</div><div class="mdlBody" id="mdlBodyCalendar"><div class="fieldGroup"><div class="title">Datos generales</div><div class="field" id="calName"><span class="monitor-lbl" title="Nombre">Nombre:</span></div><div class="field extendedSize" id="calDesc"><span class="monitor-lbl" title="Descripci&#243;n">Descripci&#243;n:</span></div></div><div class="fieldGroup"><div class="title">D&#237;as laborales</div></div><div class="gridHeader gridHeaderModal"><!-- Cabezal y filtros --><table title="D&#237;as laborales header"><thead><tr id="calendarsViewTrOrderBy" class="header"><th id="calendarsViewTrOrderByCol1" title="D&#237;a"><div style="width:40%">D&#237;a</div></th><th id="calendarsViewTrOrderByCol2" title="Horario"><div style="width:60%">Horario</div></th></tr></thead><tbody><tr style="display: none;"><td headers="calendarsViewTrOrderByCol1" ></td><td headers="calendarsViewTrOrderByCol2"></td></tr></tbody></table></div><div class="gridBody gridBodyModal" style="overflow-x: hidden !important; height: 150px;"><!-- Cuerpo de la tabla --><table title="D&#237;as laborales body"><thead><tr><th id="calendarsViewTrOrderByCol1Body" style="width:40%"></th><th id="calendarsViewTrOrderByCol2Body" style="width:60%"></th></tr></thead><tbody class="tableData" id="tableDataDays"><tr style="display: none;"><th headers="calendarsViewTrOrderByCol2Body" style="width:40%"></th><th headers="calendarsViewTrOrderByCol2Body" style="width:60%"></th></tr></tbody></table></div><div class="fieldGroup"><div class="title">Feriados</div><div class="field" style="width:100%"><div class="modalOptionsContainer" id="freeDaysContainter"></div></div></div></div><div class="gridFooter"><div class="navButtonsOptions"><div class="navButton" id="closeModalCalView" style="width: 40px">Cerrar</div></div></div></div>
+	<script type="text/javascript">
+	var MSG_NO_EMPTY_MSG		= 'El mensaje no puede estar vac&#237;o.';
+	var MSG_MARK_CHANNEL		= 'Debe seleccionar al menos un canal.';
+	var MSG_PUB_OK				= 'El mensaje ha sido publicado.';
+	var MSG_PUB_NO_OK			= 'El mensaje no ha sido publicado.';
+</script><div id="mdlSocialShareContainer" class="mdlContainer hiddenModal" tabIndex="0"><div class="mdlHeader">Compartir</div><div class="mdlBody" id="mdlBodyChn"><div class="fieldGroup" id="channels"><div class="title">Canales</div></div><div class="fieldGroup"><div class="title"><label for="txtToPub">Mensaje</label></div><textarea title="Mensaje" id="txtToPub" name="txtToPub" rows="4" maxlength="3000" style="resize:none; width: 99%;"></textarea></div></div><div class="mdlFooter footer"><div class="modalButton" id="btnPublishMdlSocialShare" tabIndex="0" title="Publicar">Publicar</div><div class="close" id="closeMdlSocialShare" tabIndex="0">Cerrar</div></div></div>
+	<script type="text/javascript">
+	var APIA_SOCIAL_REFRESH_TIME_MDL_CHN= 5 * 1000; //5 segundos 
+	var MSG_NO_EMPTY_MSG				= 'El mensaje no puede estar vac&#237;o.';
+	var MSG_CHN_PUB_OK					= 'El mensaje ha sido publicado.';
+	var MSG_CHN_PUB_NO_OK				= 'El mensaje no ha sido publicado.';
+	var MSG_DEL_MSG						= "Borrar el mensaje.";
+	var MDL_OBJ_CHANNEL_ENVIRONMENT		= 'E';
+	var MDL_OBJ_CHANNEL_PROCESS			= 'P';
+	var MDL_OBJ_CHANNEL_TASK			= 'T';
+	var MDL_OBJ_CHANNEL_POOL			= 'G';
+	var MDL_OBJ_CHANNEL_USER			= 'U';
+</script><div id="mdlReadChannelContainer" class="mdlContainer hiddenModal"><div class="mdlHeader" id="mdlReadChannelTitle"><!-- NOMBRE DEL CANAL --></div><div class="mdlBody" id="chnMdlBody"><div class="fieldGroup" id="chnReader" style="max-height: 250px;"><div id="apiaSocialReadChannel" class="apiaSocialReadModal"><div id="apiaSocialNoMessagesReadChannel" class="apiaSocialNoMessages">No existen mensajes para mostrar.</div></div></div><br><div class="fieldGroup"><div class="title"><label for="chnTxtToPub">Mensaje</label></div><textarea title="Mensaje" id="chnTxtToPub" name="chnTxtToPub" rows="3" maxlength="3000" style="resize:none; width: 99%;"></textarea></div></div><div class="mdlFooter"><div class="modalButton" id="btnPublishMdlReadChannel" title="Publicar">Publicar</div><div class="close" id="closeMdlReadChannel">Cerrar</div></div></div>
+	<!-- Aca se van a buscar las excepciones que hayan existido en el serverpara mostrarlas en pantalla --><label for="execErrors">&nbsp;</label><textarea id="execErrors" style="display:none" title="Errores">&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;&lt;data onClose=&quot;&quot; /&gt;</textarea>
+
+	
+			<script type="text/javascript">
+	var appletBlocker;
+	
+	function showAppletModal() {
+		signedOK = "false";
+		appletBlocker = $$('div.modalBlocker')[0]
+		if(!appletBlocker)
+			appletBlocker = createBlockerDiv();
+		var divDigitalSign = $("divDigitalSign").setStyles({
+			display: 'block',
+			zIndex: Number.from(appletBlocker.getStyle('z-index')) + 1
+		});
+		
+		
+				if(Browser.chrome && Browser.version >= 42) {
+					divDigitalSign.position();
+					var ifrApplet = $("ifrApplet");
+					ifrApplet.setStyle("height", 150);
+					ifrApplet.setStyle("width", 500);
+					divDigitalSign.position();
+					divDigitalSign.addClass("chromeApplet");
+					$("ifrApplet").src =  "/tramites-en-linea/TramitesEnLinea/digitalSignatureApplet/extension/chromeSignature.jsp?&tabId=1752698122905&tokenId=1752698122346";
+					divDigitalSign.focus();
+				} else 
+		
+				if(Browser.firefox && Browser.version >= 50) {
+					divDigitalSign.position();
+					var ifrApplet = $("ifrApplet");
+					ifrApplet.setStyle("height", 150);
+					ifrApplet.setStyle("width", 500);
+					divDigitalSign.position();
+					divDigitalSign.addClass("firefoxApplet");
+					$("ifrApplet").src =  "/tramites-en-linea/TramitesEnLinea/digitalSignatureApplet/extension/firefoxSignature.jsp?&tabId=1752698122905&tokenId=1752698122346";
+					divDigitalSign.focus();
+				} else 
+		
+				if(Browser.Platform.name.contains("win") && Browser.edge && Browser.version*100000 >= 1515063) {
+					divDigitalSign.position();
+					var ifrApplet = $("ifrApplet");
+					ifrApplet.setStyle("height", 150);
+					ifrApplet.setStyle("width", 500);
+					divDigitalSign.position();
+					divDigitalSign.addClass("edgeApplet");
+					$("ifrApplet").src =  "/tramites-en-linea/TramitesEnLinea/digitalSignatureApplet/extension/edgeSignature.jsp?&tabId=1752698122905&tokenId=1752698122346";
+					divDigitalSign.focus();
+				} else 
+		
+			{
+		
+			divDigitalSign.position();
+			$("ifrApplet").src =  "/tramites-en-linea/TramitesEnLinea/digitalSignatureApplet/applet.jsp?&tabId=1752698122905&tokenId=1752698122346";
+		
+			}
+		
+	}
+	
+	function hideAppletModal() {
+		if(!appletBlocker) {
+			appletBlocker = $$('div.modalBlocker')[0];
+		}
+		if(appletBlocker)
+			appletBlocker.destroy();
+		appletBlocker = null;
+		$('divDigitalSign').setStyle('display', 'none');
+	}
+</script>
+			<div class="divDelApplet" id='divDigitalSign'>
+				<iframe id="ifrApplet" title="Firma digital"  style="width: 430px;height: 210px; border: 0px;">
+				</iframe>
+			</div>
+		
+
+	<div class="div_ayuda" id="div_ayuda"></div>
+
+</body>
+
+</html>
