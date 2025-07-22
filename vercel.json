@@ -5,7 +5,13 @@
       "maxDuration": 30
     },
     "api/check/[number].ts": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "memory": 1024
+    }
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
     }
   }
 }

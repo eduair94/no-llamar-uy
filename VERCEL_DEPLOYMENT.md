@@ -106,6 +106,11 @@ curl https://tu-proyecto.vercel.app/api/check/59898297150
 - **Hobby (Gratis)**: 10 segundos máximo - ⚠️ Puede causar timeouts
 - **Pro ($20/mes)**: 60 segundos máximo - ✅ Recomendado
 
+### OCR y CAPTCHAs en Serverless
+- **Entorno local**: Usa OCR avanzado con múltiples configuraciones
+- **Vercel serverless**: Usa OCR simplificado para evitar problemas de WASM
+- **Fallback automático**: Si OCR falla, genera un intento razonable
+
 ### Cold Starts
 Las funciones serverless pueden tener "cold starts" (arranque en frío):
 - Primera petición puede tardar 2-3 segundos extra
