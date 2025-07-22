@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "functions": {
     "api/index.ts": {
       "maxDuration": 30
@@ -7,8 +6,5 @@
     "api/check/[number].ts": {
       "maxDuration": 60
     }
-  },
-  "env": {
-    "NODE_ENV": "production"
   }
 }
