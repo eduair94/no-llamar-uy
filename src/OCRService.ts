@@ -212,9 +212,9 @@ export class OCRService {
     // Try recognition with different configurations for better accuracy (matching PhoneChecker)
     const configs = [
       { psr: PSM.SINGLE_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
-      { psr: PSM.SINGLE_WORD, oem: OEM.LSTM_ONLY },
-      { psr: PSM.SINGLE_CHAR, oem: OEM.TESSERACT_ONLY },
-      { psr: PSM.RAW_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
+      //{ psr: PSM.SINGLE_WORD, oem: OEM.LSTM_ONLY },
+      //{ psr: PSM.SINGLE_CHAR, oem: OEM.TESSERACT_ONLY },
+      //{ psr: PSM.RAW_LINE, oem: OEM.TESSERACT_LSTM_COMBINED },
     ];
 
     for (const config of configs) {
