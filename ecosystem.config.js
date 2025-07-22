@@ -6,6 +6,9 @@ module.exports = {
       time: true,
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
+      env: {
+        OCR_PORT: process.env.OCR_PORT || 3001,
+      },
       kill_timeout: 5000,
       restart_delay: 1000,
       max_restarts: 10,
