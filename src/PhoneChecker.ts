@@ -52,7 +52,7 @@ interface ParsedContent {
 
 export class PhoneChecker {
   private readonly targetUrl = "https://tramites.ursec.gub.uy/tramites-en-linea/TramitesEnLinea/apia.portal.PortalAction.run?dshId=1057";
-  private readonly outputDir = path.join(__dirname, "..", "responses");
+  private readonly outputDir = process.env.VERCEL ? "/tmp/responses" : path.join(__dirname, "..", "responses");
 
   constructor() {
     this.ensureOutputDirectory();
@@ -768,8 +768,9 @@ export class PhoneChecker {
         },
       });
 
-      // Save the CAPTCHA image temporarily
-      const captchaImagePath = path.join(this.outputDir, `captcha_${Date.now()}.png`);
+      // Save the CAPTCHA image temporarily (use /tmp in serverless environments)
+      const tempDir = process.env.VERCEL ? "/tmp" : this.outputDir;
+      const captchaImagePath = path.join(tempDir, `captcha_${Date.now()}.png`);
       await fs.writeFile(captchaImagePath, imageResponse.data);
 
       console.log(`📄 CAPTCHA image saved to: ${captchaImagePath}`);

@@ -1,6 +1,22 @@
 # 📞 No Llamar API
 
-Una API gratuita para consultar el registro "No Llame" de Uruguay, desarrollada como alternativa libre a [nollame.uy](https://nollame.uy/).
+Una API gratuita para consultar el registLa API estará disponible en `http://localhost:3000`
+
+## ☁️ Despliegue en Vercel
+
+Esta API puede desplegarse fácilmente en Vercel para uso en producción:
+
+```bash
+# 1. Conecta tu repositorio con Vercel
+# 2. Vercel detectará automáticamente la configuración
+# 3. Despliega con un clic
+```
+
+**⚠️ Nota importante**: Debido a las limitaciones de tiempo de las funciones serverless (10s Hobby / 60s Pro), se recomienda el plan Pro de Vercel para mejor rendimiento con CAPTCHAs complejos.
+
+Ver [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) para instrucciones detalladas.
+
+## 📋 Uso de la API"No Llame" de Uruguay, desarrollada como alternativa libre a [nollame.uy](https://nollame.uy/).
 
 ## 🎯 Descripción
 

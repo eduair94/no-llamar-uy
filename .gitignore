@@ -1,5 +1,9 @@
 node_modules
 package-lock.json
-./responses/*
+responses/*
+!responses/.gitkeep
 .env
+.env.local
+.env.production
 dist
+.vercel
