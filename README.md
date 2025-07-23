@@ -81,15 +81,19 @@ La API estará disponible en `http://localhost:3000`
 
 ### Endpoint Principal
 
-**GET** `/check/:phoneNumber`
+**GET** `/api/check/:phoneNumber[?ignoreCache=true]`
 
 ### Parámetros
 
 - `phoneNumber`: Número telefónico uruguayo (puede incluir código de país +598 o no)
 
+### Parámetros de consulta opcionales
+
+- `ignoreCache`: (opcional) Si se establece en `true` o `1`, omite la caché y realiza una consulta nueva al sistema URSEC
+
 ### Ejemplos de uso
 
-#### Consulta básica
+#### Consulta básica (usa caché si está disponible)
 
 ```bash
 curl https://no-llamar-uy.vercel.app/api/check/95614500
@@ -105,6 +109,12 @@ curl https://no-llamar-uy.vercel.app/api/check/59895614500
 
 ```bash
 curl https://no-llamar-uy.vercel.app/api/check/+59895614500
+```
+
+#### Ignorando caché (siempre consulta URSEC directamente)
+
+```bash
+curl "https://no-llamar-uy.vercel.app/api/check/95614500?ignoreCache=true"
 ```
 
 ## 📊 Respuesta de la API
@@ -176,6 +186,33 @@ curl https://no-llamar-uy.vercel.app/api/check/+59895614500
 | `portalResponse.isInRecord` | `true` si está en el registro No Llame |
 | `portalResponse.captchaSolveAttempts` | Intentos de resolución del CAPTCHA |
 | `timestamp` | Marca de tiempo de la consulta |
+| `cached` | (opcional) `true` si la respuesta viene de caché |
+| `cacheTimestamp` | (opcional) Fecha de cuando se guardó en caché |
+
+## 💾 Sistema de Caché
+
+La API implementa un sistema de caché inteligente para mejorar el rendimiento:
+
+### Características del Caché
+
+- **Duración**: 24 horas por defecto
+- **Storage**: Vercel Blob (en producción) 
+- **Alcance**: Por número de teléfono normalizado
+- **Invalidación**: Automática por tiempo o manual con `ignoreCache=true`
+
+### Comportamiento
+
+- Las consultas exitosas se almacenan automáticamente en caché
+- Las respuestas con errores no se cachean
+- El parámetro `ignoreCache=true` omite completamente la caché
+- Las respuestas cacheadas incluyen los campos `cached: true` y `cacheTimestamp`
+
+### Beneficios
+
+- ⚡ **Respuesta rápida**: Respuestas instantáneas para números ya consultados
+- 💰 **Menor costo**: Reduce llamadas al sistema URSEC
+- 🔄 **Menor carga**: Evita resolver CAPTCHAs innecesariamente
+- 🎯 **Mejor UX**: Experiencia más fluida para el usuario
 
 ## 🏗️ Arquitectura
 

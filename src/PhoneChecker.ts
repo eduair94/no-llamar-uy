@@ -69,24 +69,32 @@ export class PhoneChecker {
   /**
    * Performs a GET request to the URSEC portal and saves the response
    * @param number - The phone number to check
+   * @param options - Optional parameters for the check
+   * @param options.ignoreCache - If true, bypasses cache and performs a fresh check
    * @returns Promise<any> - The response data
    */
-  async check(number: string): Promise<any> {
+  async check(number: string, options?: { ignoreCache?: boolean }): Promise<any> {
     try {
       console.log(`Checking phone number: ${number}`);
+      
+      const shouldIgnoreCache = options?.ignoreCache || false;
+      
+      if (shouldIgnoreCache) {
+        console.log(`🚫 Cache bypass requested, performing fresh check for: ${number}`);
+      } else {
+        // Check for cached result first
+        const cachedResult = await this.cacheService.get(number);
+        if (cachedResult) {
+          console.log(`✅ Returning cached result for phone number: ${number}`);
+          return {
+            ...cachedResult.data,
+            cached: true,
+            cacheTimestamp: cachedResult.timestamp,
+          };
+        }
 
-      // Check for cached result first
-      const cachedResult = await this.cacheService.get(number);
-      if (cachedResult) {
-        console.log(`✅ Returning cached result for phone number: ${number}`);
-        return {
-          ...cachedResult.data,
-          cached: true,
-          cacheTimestamp: cachedResult.timestamp,
-        };
+        console.log(`🔄 No valid cache found, performing fresh check for: ${number}`);
       }
-
-      console.log(`🔄 No valid cache found, performing fresh check for: ${number}`);
 
       // Create HTTPS agent that can handle certificate issues
       const httpsAgent = new https.Agent({

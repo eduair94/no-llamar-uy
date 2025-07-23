@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { method } = req;
-  const { number } = req.query;
+  const { number, ignoreCache } = req.query;
 
   try {
     if (method !== "GET") {
@@ -70,9 +70,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log(`✅ Phone number validated and normalized: ${normalizedNumber}`);
 
+    // Parse cache bypass parameter
+    const shouldIgnoreCache = ignoreCache === 'true' || ignoreCache === '1';
+    if (shouldIgnoreCache) {
+      console.log(`🚫 Cache bypass parameter detected, will perform fresh check`);
+    }
+
     // Step 3: Check the phone number in URSEC
     console.log(`🌐 Checking phone number in URSEC: ${normalizedNumber}`);
-    const checkResult = await phoneChecker.check(normalizedNumber);
+    const checkResult = await phoneChecker.check(normalizedNumber, { ignoreCache: shouldIgnoreCache });
 
     console.log(`📋 Check completed with result: ${checkResult.result}`);
 

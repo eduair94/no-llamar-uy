@@ -49,6 +49,12 @@
       .test-button:hover {
         background: #0056b3;
       }
+      .test-button.no-cache {
+        background: #ff6b35;
+      }
+      .test-button.no-cache:hover {
+        background: #e55a2b;
+      }
       .github-link {
         display: inline-block;
         background: #333;
@@ -194,17 +200,28 @@
 
       <div class="endpoint">
         <h3>Verificar Número</h3>
-        <div class="code">GET /api/check/{numero}</div>
+        <div class="code">GET /api/check/{numero}[?ignoreCache=true]</div>
         <button class="test-button" onclick="testPhone('98297150')">🔄 Probar con 98297150</button>
         <button class="test-button" onclick="testPhone('59898297150')">🔄 Probar con 59898297150</button>
+        <button class="test-button" onclick="testPhoneIgnoreCache('98297150')">🚫 Probar 98297150 (sin caché)</button>
+        <p><strong>Parámetros opcionales:</strong></p>
+        <ul>
+          <li><code>ignoreCache=true</code> - Omite la caché y realiza una verificación nueva</li>
+        </ul>
       </div>
 
       <div id="result" style="margin-top: 20px"></div>
 
       <h3>📋 Ejemplos de uso:</h3>
       <div class="code">
-        curl https://no-llamar-uy.vercel.app/api<br />
-        curl https://no-llamar-uy.vercel.app/api/check/98297150
+        # Health check<br />
+        curl https://no-llamar-uy.vercel.app/api<br /><br />
+        
+        # Verificar número (usa caché si está disponible)<br />
+        curl https://no-llamar-uy.vercel.app/api/check/98297150<br /><br />
+        
+        # Verificar número ignorando caché (siempre hace una consulta nueva)<br />
+        curl "https://no-llamar-uy.vercel.app/api/check/98297150?ignoreCache=true"
       </div>
 
       <div class="footer">
@@ -239,6 +256,22 @@
           const data = await response.json();
           result.innerHTML = `
                     <h3>📱 Result for ${number}:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+        } catch (error) {
+          result.innerHTML = `<h3>❌ Error:</h3><p>${error.message}</p>`;
+        }
+      }
+
+      async function testPhoneIgnoreCache(number) {
+        const result = document.getElementById("result");
+        result.innerHTML = `<p>⏳ Verificando número ${number} (sin caché)...</p>`;
+
+        try {
+          const response = await fetch(`/api/check/${number}?ignoreCache=true`);
+          const data = await response.json();
+          result.innerHTML = `
+                    <h3>📱 Result for ${number} (no cache):</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
         } catch (error) {
