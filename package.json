@@ -40,6 +40,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.19",
+    "@vercel/blob": "^1.1.1",
     "axios": "^1.6.0",
     "cheerio": "^1.1.0",
     "cors": "^2.8.5",

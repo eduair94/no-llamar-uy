@@ -5,6 +5,7 @@ import { promises as fs } from "fs";
 import https from "https";
 import path from "path";
 import { createWorker, OEM, PSM } from "tesseract.js";
+import { createCacheService, ICacheService } from "./CacheService";
 dotenv.config();
 
 // Type definitions for iframe parsing
@@ -15,6 +16,13 @@ interface IframeInfo {
   width?: string;
   height?: string;
   index: number;
+}
+
+export interface UrsecResponse {
+  captchaSolveAttempts: number;
+  response: string;
+  isInRecord: boolean;
+  error?: string;
 }
 
 interface ParsedContent {
@@ -33,30 +41,17 @@ interface CookieInfo {
   path?: string;
 }
 
-// Type definitions
-interface IframeInfo {
-  src: string;
-  id?: string;
-  name?: string;
-  width?: string;
-  height?: string;
-  index: number;
-}
-
-interface ParsedContent {
-  title: string;
-  metaDescription?: string;
-  iframes: IframeInfo[];
-  scripts: string[];
-  iframeCount: number;
-  scriptCount: number;
-}
-
 export class PhoneChecker {
   private readonly targetUrl = "https://tramites.ursec.gub.uy/tramites-en-linea/TramitesEnLinea/apia.portal.PortalAction.run?dshId=1057";
   private readonly outputDir = process.env.VERCEL ? "/tmp/responses" : path.join(__dirname, "..", "responses");
+  private readonly cacheService: ICacheService;
 
-  constructor() {
+  constructor(cacheService?: ICacheService) {
+    this.cacheService =
+      cacheService ||
+      createCacheService("vercel-blob", {
+        maxAgeHours: 24,
+      });
     this.ensureOutputDirectory();
   }
 
@@ -79,6 +74,19 @@ export class PhoneChecker {
   async check(number: string): Promise<any> {
     try {
       console.log(`Checking phone number: ${number}`);
+
+      // Check for cached result first
+      const cachedResult = await this.cacheService.get(number);
+      if (cachedResult) {
+        console.log(`✅ Returning cached result for phone number: ${number}`);
+        return {
+          ...cachedResult.data,
+          cached: true,
+          cacheTimestamp: cachedResult.timestamp,
+        };
+      }
+
+      console.log(`🔄 No valid cache found, performing fresh check for: ${number}`);
 
       // Create HTTPS agent that can handle certificate issues
       const httpsAgent = new https.Agent({
@@ -154,7 +162,7 @@ export class PhoneChecker {
       const cookies = this.extractCookies(response);
 
       // Create response object with metadata and parsed content
-      const responseData: any = {
+      const responseData = {
         timestamp: new Date().toISOString(),
         phoneNumber: number,
         status: response.status,
@@ -171,12 +179,13 @@ export class PhoneChecker {
         },
         cookies: cookies,
         requestUrl: this.targetUrl,
+        iframeResponses: [],
       };
 
       // If iframes exist, fetch their content using the same cookies
       if (iframes.length > 0) {
         console.log(`📄 Found ${iframes.length} iframes, fetching their content...`);
-        responseData.iframeResponses = await this.fetchIframeContent(iframes, cookies, httpsAgent, number);
+        responseData.iframeResponses = (await this.fetchIframeContent(iframes, cookies, httpsAgent, number)) as any;
       }
 
       console.log(`✅ Successfully checked phone number: ${number}`);
@@ -191,7 +200,13 @@ export class PhoneChecker {
 
       const iframeData = responseData.iframeResponses;
       if (iframeData && iframeData.length > 0) {
-        const iframeResponse = iframeData[0].phoneValidationResult;
+        const iframeResponse: UrsecResponse = (iframeData[0] as any).phoneValidationResult;
+        if (iframeResponse.response && !iframeResponse.error) {
+          // Cache the successful result
+          await this.cacheService.set(number, iframeResponse);
+          console.log(`💾 Successfully cached result for phone number: ${number}`);
+        }
+
         return iframeResponse;
       }
 
@@ -441,7 +456,7 @@ export class PhoneChecker {
    * @param phoneNumber - The phone number to validate
    * @returns Promise<any[]> - Array of iframe responses
    */
-  private async fetchIframeContent(iframes: IframeInfo[], cookies: CookieInfo[], httpsAgent: https.Agent, phoneNumber: string): Promise<any[]> {
+  private async fetchIframeContent(iframes: IframeInfo[], cookies: CookieInfo[], httpsAgent: https.Agent, phoneNumber: string) {
     const iframeResponses: any[] = [];
 
     // Create cookie string for requests
