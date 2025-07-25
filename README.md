@@ -57,7 +57,22 @@ Crear un archivo `.env` en la raíz del proyecto:
 ```env
 NODE_ENV=development
 PORT=3000
+
+# Configuración de caché (opcional - ver CACHE_CONFIGURATION.md para detalles)
+# MySQL (prioritario)
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password
+MYSQL_DATABASE=no_llamar_cache
+
+# MongoDB (alternativo)
+MONGODB_URL=mongodb://localhost:27017/no-llamar-cache
+
+# Vercel Blob (fallback)
+BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 ```
+
+> 📖 **Para configuración detallada del sistema de caché**, consulta [CACHE_CONFIGURATION.md](./CACHE_CONFIGURATION.md)
 
 ### 4. Compilar el proyecto
 
@@ -191,14 +206,58 @@ curl "https://no-llamar-uy.vercel.app/api/check/95614500?ignoreCache=true"
 
 ## 💾 Sistema de Caché
 
-La API implementa un sistema de caché inteligente para mejorar el rendimiento:
+La API implementa un sistema de caché inteligente multi-proveedor para mejorar el rendimiento:
+
+### Proveedores de Caché Soportados
+
+La API detecta automáticamente la configuración disponible y usa el mejor proveedor en este orden de prioridad:
+
+1. **MySQL** (prioritario)
+2. **MongoDB** 
+3. **Vercel Blob** (fallback)
+
+### Configuración de Proveedores
+
+#### 🗄️ MySQL Cache
+
+Para usar MySQL como sistema de caché, configura estas variables de entorno:
+
+```env
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password
+MYSQL_DATABASE=no_llamar_cache
+MYSQL_SSL=false
+```
+
+La API creará automáticamente la base de datos y las tablas necesarias. También incluye un script SQL de configuración manual en `mysql-setup.sql`.
+
+#### 🍃 MongoDB Cache
+
+Para usar MongoDB como sistema de caché:
+
+```env
+MONGODB_URL=mongodb://localhost:27017/no-llamar-cache
+# o
+MONGO_URL=mongodb://localhost:27017/no-llamar-cache
+```
+
+#### ☁️ Vercel Blob Cache
+
+Para usar Vercel Blob (recomendado para despliegues en Vercel):
+
+```env
+BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+```
 
 ### Características del Caché
 
-- **Duración**: 24 horas por defecto
-- **Storage**: Vercel Blob (en producción) 
+- **Duración**: 24 horas por defecto (configurable)
 - **Alcance**: Por número de teléfono normalizado
 - **Invalidación**: Automática por tiempo o manual con `ignoreCache=true`
+- **Interfaz unificada**: Todos los proveedores implementan la misma interfaz
+- **Auto-detección**: Selección automática del mejor proveedor disponible
 
 ### Comportamiento
 
@@ -206,6 +265,7 @@ La API implementa un sistema de caché inteligente para mejorar el rendimiento:
 - Las respuestas con errores no se cachean
 - El parámetro `ignoreCache=true` omite completamente la caché
 - Las respuestas cacheadas incluyen los campos `cached: true` y `cacheTimestamp`
+- Limpieza automática de entradas expiradas (MySQL y MongoDB)
 
 ### Beneficios
 
@@ -213,6 +273,7 @@ La API implementa un sistema de caché inteligente para mejorar el rendimiento:
 - 💰 **Menor costo**: Reduce llamadas al sistema URSEC
 - 🔄 **Menor carga**: Evita resolver CAPTCHAs innecesariamente
 - 🎯 **Mejor UX**: Experiencia más fluida para el usuario
+- 🔧 **Flexibilidad**: Múltiples opciones de almacenamiento según el entorno
 
 ## 🏗️ Arquitectura
 
@@ -227,6 +288,7 @@ La API funciona siguiendo estos pasos:
 
 ## 🛠️ Tecnologías Utilizadas
 
+### Core
 - **Node.js + TypeScript**: Backend principal
 - **Express**: Framework web
 - **Axios**: Cliente HTTP para requests
@@ -234,14 +296,48 @@ La API funciona siguiendo estos pasos:
 - **Tesseract.js**: OCR para resolución de CAPTCHAs
 - **google-libphonenumber**: Validación de números telefónicos
 
+### Cache Providers
+- **MySQL2**: Driver para MySQL (cache prioritario)
+- **MongoDB**: Driver oficial para MongoDB (cache alternativo)
+- **@vercel/blob**: Cliente para Vercel Blob Storage (cache fallback)
+
 ## 📝 Scripts Disponibles
 
 ```bash
+# Desarrollo y construcción
 npm run dev      # Ejecutar en modo desarrollo
 npm run build    # Compilar TypeScript
 npm start        # Ejecutar en producción
-npm test         # Ejecutar tests (si están configurados)
+
+# Testing y validación
+npm run test:cache     # Probar todos los proveedores de caché
+npm run test          # Ejecutar tests comprehensivos
+npm run test:phone    # Probar PhoneChecker específicamente
+npm run test:api      # Probar la API completa
+
+# OCR API (opcional)
+npm run start:ocr     # Ejecutar API de OCR por separado
+npm run dev:ocr       # Ejecutar OCR API en modo desarrollo
+
+# PM2 (gestión de procesos)
+npm run pm2:start     # Iniciar con PM2
+npm run pm2:stop      # Detener procesos PM2
+npm run pm2:logs      # Ver logs de PM2
 ```
+
+### 🧪 Probar los Proveedores de Caché
+
+Para verificar que los proveedores de caché están funcionando correctamente:
+
+```bash
+# Probar todos los proveedores configurados
+npm run test:cache
+
+# O probar manualmente cada uno:
+ts-node test-cache-providers.ts
+```
+
+Este script probará automáticamente todos los proveedores de caché disponibles según tu configuración de variables de entorno.
 
 ## ⚠️ Consideraciones Importantes
 

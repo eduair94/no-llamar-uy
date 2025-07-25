@@ -38,7 +38,15 @@ app.get("/health", (req: Request, res: Response) => {
 // Main endpoint to validate and check phone number
 app.get("/check/:number", async (req: Request, res: Response): Promise<void> => {
   try {
+    const startTime = Date.now();
+
     const { number } = req.params;
+    const { ignoreCache } = req.query;
+
+    const shouldIgnoreCache = ignoreCache === "true" || ignoreCache === "1";
+    if (shouldIgnoreCache) {
+      console.log(`🚫 Cache bypass parameter detected, will perform fresh check`);
+    }
 
     console.log(`\n🔍 Processing phone number: ${number}`);
 
@@ -74,7 +82,7 @@ app.get("/check/:number", async (req: Request, res: Response): Promise<void> => 
     // Step 3: Perform the check against URSEC portal
     let portalResponse;
     try {
-      portalResponse = await phoneChecker.check(normalizedNumber);
+      portalResponse = await phoneChecker.check(normalizedNumber, { ignoreCache: shouldIgnoreCache });
     } catch (error) {
       console.log(`❌ Portal check failed: ${error instanceof Error ? error.message : "Unknown error"}`);
       res.status(500).json({
@@ -88,18 +96,21 @@ app.get("/check/:number", async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Step 4: Return successful response
-    const response = {
-      success: true,
-      phoneNumber: normalizedNumber,
-      validation: validationResult,
-      normalizedNumber: normalizedNumber,
-      portalResponse: portalResponse,
-      timestamp: new Date().toISOString(),
-    };
+    // Calculate total execution time
+    const timeMs = Date.now() - startTime;
 
-    console.log(`✅ Request completed successfully for ${normalizedNumber}`);
-    res.json(response);
+    res.json({
+      success: true,
+      phoneNumber: {
+        original: number,
+        normalized: normalizedNumber,
+        isValid: true,
+        formatted: validationResult.formatted,
+        type: validationResult.type,
+      },
+      ursecCheck: portalResponse,
+      timeMs,
+    });
   } catch (error) {
     console.error(`❌ Unexpected error:`, error);
     res.status(500).json({

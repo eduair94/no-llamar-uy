@@ -1,11 +1,11 @@
-import { PhoneChecker } from "./src/PhoneChecker";
 import { createCacheService } from "./src/CacheService";
+import { PhoneChecker } from "./src/PhoneChecker";
 
 async function testIgnoreCacheFeature() {
   console.log("🧪 Testing ignoreCache functionality...");
 
   // Create a phone checker with cache
-  const cacheService = createCacheService('vercel-blob', { maxAgeHours: 24 });
+  const cacheService = createCacheService("vercel-blob", { maxAgeHours: 24 });
   const phoneChecker = new PhoneChecker(cacheService);
 
   const testNumber = "95614500";
@@ -26,13 +26,13 @@ async function testIgnoreCacheFeature() {
   console.log("\n🔍 Test 3: Check with ignoreCache = true");
   const result3 = await phoneChecker.check(testNumber, { ignoreCache: true });
   console.log(`✅ Result 3 cached: ${result3.cached || false}`);
-  console.log(`✅ Result 3 should NOT be cached: ${!result3.cached ? 'PASS' : 'FAIL'}`);
+  console.log(`✅ Result 3 should NOT be cached: ${!result3.cached ? "PASS" : "FAIL"}`);
 
   console.log("\n🏁 ignoreCache functionality test completed");
 
   // Test the options parameter structure
   console.log("\n🔧 Testing options parameter structure...");
-  
+
   // Test with empty options
   const result4 = await phoneChecker.check(testNumber, {});
   console.log(`✅ Empty options object handled correctly`);
@@ -47,14 +47,14 @@ async function testIgnoreCacheFeature() {
 // Only run if not in a production environment or if cache is disabled
 async function main() {
   try {
-    const cacheService = createCacheService('vercel-blob');
+    const cacheService = createCacheService("vercel-blob");
     const stats = await cacheService.getStats();
-    
+
     if (!stats.enabled) {
       console.log("⚠️ Cache is disabled (no BLOB_READ_WRITE_TOKEN)");
       console.log("This test will only verify the parameter handling, not actual caching");
     }
-    
+
     await testIgnoreCacheFeature();
   } catch (error) {
     console.error("❌ Test failed:", error);

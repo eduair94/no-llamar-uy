@@ -1,21 +1,8 @@
 import { head, put } from "@vercel/blob";
 import dotenv from "dotenv";
-import { UrsecResponse } from "./PhoneChecker";
+import { CachedResult, ICacheService } from "../CacheService.interface";
+import { UrsecResponse } from "../PhoneChecker";
 dotenv.config();
-
-export interface CachedResult {
-  timestamp: string;
-  data: UrsecResponse;
-  phoneNumber: string;
-}
-
-export interface ICacheService {
-  get(key: string): Promise<CachedResult | null>;
-  set(key: string, data: UrsecResponse): Promise<void>;
-  isValid(cachedResult: CachedResult, maxAgeHours?: number): boolean;
-  generateKey(phoneNumber: string): string;
-  getStats(): Promise<{ enabled: boolean; tokenAvailable: boolean; maxAgeHours: number }>;
-}
 
 /**
  * Cache service implementation using Vercel Blob storage

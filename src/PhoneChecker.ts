@@ -5,7 +5,8 @@ import { promises as fs } from "fs";
 import https from "https";
 import path from "path";
 import { createWorker, OEM, PSM } from "tesseract.js";
-import { createCacheService, ICacheService } from "./CacheService";
+import { createAutoCacheService } from "./CacheService";
+import { ICacheService } from "./CacheService.interface";
 dotenv.config();
 
 // Type definitions for iframe parsing
@@ -49,7 +50,7 @@ export class PhoneChecker {
   constructor(cacheService?: ICacheService) {
     this.cacheService =
       cacheService ||
-      createCacheService("vercel-blob", {
+      createAutoCacheService({
         maxAgeHours: 24,
       });
     this.ensureOutputDirectory();
@@ -76,14 +77,15 @@ export class PhoneChecker {
   async check(number: string, options?: { ignoreCache?: boolean }): Promise<any> {
     try {
       console.log(`Checking phone number: ${number}`);
-      
+
       const shouldIgnoreCache = options?.ignoreCache || false;
-      
+
       if (shouldIgnoreCache) {
         console.log(`🚫 Cache bypass requested, performing fresh check for: ${number}`);
       } else {
         // Check for cached result first
         const cachedResult = await this.cacheService.get(number);
+        console.log("Ignoring cache:", cachedResult);
         if (cachedResult) {
           console.log(`✅ Returning cached result for phone number: ${number}`);
           return {

@@ -71,7 +71,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`✅ Phone number validated and normalized: ${normalizedNumber}`);
 
     // Parse cache bypass parameter
-    const shouldIgnoreCache = ignoreCache === 'true' || ignoreCache === '1';
+    const shouldIgnoreCache = ignoreCache === "true" || ignoreCache === "1";
     if (shouldIgnoreCache) {
       console.log(`🚫 Cache bypass parameter detected, will perform fresh check`);
     }

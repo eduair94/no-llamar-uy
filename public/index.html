@@ -210,16 +210,58 @@
         </ul>
       </div>
 
+      <div class="endpoint">
+        <h3>💾 Sistema de Caché Multi-Proveedor</h3>
+        <p>La API detecta automáticamente la configuración disponible y utiliza el mejor proveedor de caché:</p>
+        
+        <div style="margin: 15px 0;">
+          <h4>🔄 Orden de Prioridad:</h4>
+          <ol style="margin-left: 20px;">
+            <li><strong>MySQL</strong> - Base de datos relacional (prioritario)</li>
+            <li><strong>MongoDB</strong> - Base de datos NoSQL</li>
+            <li><strong>Vercel Blob</strong> - Almacenamiento en la nube (fallback)</li>
+          </ol>
+        </div>
+
+        <div style="margin: 15px 0;">
+          <h4>⚙️ Configuración por Variables de Entorno:</h4>
+          <div class="code" style="text-align: left; font-size: 12px;">
+            # MySQL Cache<br/>
+            MYSQL_HOST=localhost<br/>
+            MYSQL_USER=root<br/>
+            MYSQL_PASSWORD=your_password<br/>
+            MYSQL_DATABASE=no_llamar_cache<br/><br/>
+            
+            # MongoDB Cache<br/>
+            MONGODB_URL=mongodb://localhost:27017/no-llamar-cache<br/><br/>
+            
+            # Vercel Blob Cache<br/>
+            BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+          </div>
+        </div>
+
+        <div style="margin: 15px 0;">
+          <h4>✨ Características:</h4>
+          <ul style="margin-left: 20px;">
+            <li>⏰ <strong>TTL:</strong> 24 horas por defecto</li>
+            <li>🔄 <strong>Auto-detección:</strong> Selección automática del mejor proveedor</li>
+            <li>🧹 <strong>Limpieza automática:</strong> Eliminación de entradas expiradas (MySQL/MongoDB)</li>
+            <li>📊 <strong>Estadísticas:</strong> Información del estado del caché</li>
+            <li>🚫 <strong>Bypass:</strong> Parámetro <code>ignoreCache=true</code> para omitir caché</li>
+          </ul>
+        </div>
+      </div>
+
       <div id="result" style="margin-top: 20px"></div>
 
       <h3>📋 Ejemplos de uso:</h3>
       <div class="code">
         # Health check<br />
         curl https://no-llamar-uy.vercel.app/api<br /><br />
-        
+
         # Verificar número (usa caché si está disponible)<br />
         curl https://no-llamar-uy.vercel.app/api/check/98297150<br /><br />
-        
+
         # Verificar número ignorando caché (siempre hace una consulta nueva)<br />
         curl "https://no-llamar-uy.vercel.app/api/check/98297150?ignoreCache=true"
       </div>
